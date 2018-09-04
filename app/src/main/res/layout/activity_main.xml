@@ -6,4 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.MainActivity">
 
+    <include layout="@layout/bottom_nav_view" />
+
 </android.support.constraint.ConstraintLayout>
