@@ -14,5 +14,4 @@
         app:itemTextColor="@color/bottom_nav_color"
         app:menu="@menu/btm_nav_menu" />
 
-    <include layout="@layout/content_main" />
 </FrameLayout>
