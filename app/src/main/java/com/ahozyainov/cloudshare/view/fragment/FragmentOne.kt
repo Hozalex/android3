@@ -14,7 +14,7 @@ class FragmentOne : Fragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
-        fragment_text.text = "Fragment ONe"
+        fragment_text.text = "Fragment One"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
