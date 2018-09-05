@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CloudShare</string>
-    <string name="picture">Picture</string>
-    <string name="file">File</string>
+    <string name="one">One</string>
+    <string name="two">Two</string>
+    <string name="three">Three</string>
     <string name="search">Search</string>
 </resources>
