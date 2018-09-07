@@ -1,7 +1,6 @@
 package com.ahozyainov.cloudshare.view.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +10,8 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import kotlinx.android.synthetic.main.app_fragment.*
 
 class FragmentOne : MvpAppCompatFragment(), BestRestView {
+
+
     override fun hideLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -27,17 +28,10 @@ class FragmentOne : MvpAppCompatFragment(), BestRestView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragment_text.text = "Fragment One"
-        frame_button.text = "Count = "
-        frame_button.setOnClickListener {  }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.app_fragment, container, false)
-    }
-
-    override fun setButtonNum(viewIndex: Int, value: Int) {
-        Log.d("button", "setButtonNum Fragment")
-        frame_button.text = "Count = $value"
     }
 
 }
