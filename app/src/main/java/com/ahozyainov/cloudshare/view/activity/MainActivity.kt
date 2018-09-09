@@ -7,21 +7,25 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import com.ahozyainov.cloudshare.R
+import com.ahozyainov.cloudshare.presenter.RestPresenter
+import com.ahozyainov.cloudshare.presenter.base.BaseRestView
 import com.ahozyainov.cloudshare.view.fragment.FragmentOne
 import com.ahozyainov.cloudshare.view.fragment.FragmentThree
 import com.ahozyainov.cloudshare.view.fragment.FragmentTwo
 import com.arellomobile.mvp.MvpAppCompatActivity
+import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.app_bar.*
-import kotlinx.android.synthetic.main.app_fragment.*
 
-class MainActivity : MvpAppCompatActivity() {
+class MainActivity : MvpAppCompatActivity(), BaseRestView {
+
+    @InjectPresenter
+    val presenter = RestPresenter()
 
     private lateinit var mFragmentManager: android.support.v4.app.FragmentManager
     private lateinit var mFragmentOne: FragmentOne
     private lateinit var mFragmentTwo: FragmentTwo
     private lateinit var mFragmentThree: FragmentThree
     private lateinit var mBottomNavView: BottomNavigationView
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +57,7 @@ class MainActivity : MvpAppCompatActivity() {
                 .setView(editText)
                 .setPositiveButton("OK") { dialogInterface, i ->
                     if (editText.text.isNotEmpty()) {
-                        fragment_text.text = editText.text.toString()
+                        presenter.update(editText.text.toList())
                     }
                 }
         alert.show()
@@ -75,6 +79,18 @@ class MainActivity : MvpAppCompatActivity() {
             }
             false
         }
+
+    }
+
+    override fun startLoading() {
+
+    }
+
+    override fun hideLoading() {
+        TODO("not implemented") //ToTODO("not implemented") //To change body of created functions use File | Settings | File Templates. change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun showError(error: String) {
 
     }
 

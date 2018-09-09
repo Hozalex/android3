@@ -5,7 +5,7 @@ import com.arellomobile.mvp.MvpPresenter
 import rx.Observer
 
 @InjectViewState
-abstract class BaseRestPresenter<T> : MvpPresenter<BestRestView>(), Observer<T> {
+abstract class BaseRestPresenter<T> : MvpPresenter<BaseRestView>(), Observer<T> {
 
     override fun onError(e: Throwable) {
         viewState.showError(e.localizedMessage)

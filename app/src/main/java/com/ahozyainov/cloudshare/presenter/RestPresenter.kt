@@ -1,16 +1,18 @@
 package com.ahozyainov.cloudshare.presenter
 
+import android.util.Log
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import rx.Observable
 
-class RestPresenter : BaseRestPresenter<String>() {
-    override fun onNext(t: String?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+class RestPresenter : BaseRestPresenter<Char>() {
+
+    override fun onNext(char: Char) {
+       Log.d("obser", char.toString())
     }
 
-    fun update() {
+    fun update(list: List<Char>) {
         viewState.startLoading()
-        Observable.just("", "")
-                .subscribe(this)
+        Observable.from(list).subscribe(this)
+
     }
 }
