@@ -2,15 +2,17 @@ package com.ahozyainov.cloudshare.view.activity
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import android.widget.EditText
 import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.view.fragment.FragmentOne
 import com.ahozyainov.cloudshare.view.fragment.FragmentThree
 import com.ahozyainov.cloudshare.view.fragment.FragmentTwo
 import com.arellomobile.mvp.MvpAppCompatActivity
 import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.app_fragment.*
 
 class MainActivity : MvpAppCompatActivity() {
 
@@ -39,13 +41,22 @@ class MainActivity : MvpAppCompatActivity() {
 
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.app_bar_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        Toast.makeText(this, "search menu", Toast.LENGTH_SHORT).show()
+        val alert = AlertDialog.Builder(this)
+        val editText = EditText(this)
+        alert.setTitle("Search")
+                .setView(editText)
+                .setPositiveButton("OK") { dialogInterface, i ->
+                    if (editText.text.isNotEmpty()) {
+                        fragment_text.text = editText.text.toString()
+                    }
+                }
+        alert.show()
         return super.onOptionsItemSelected(item)
     }
 
