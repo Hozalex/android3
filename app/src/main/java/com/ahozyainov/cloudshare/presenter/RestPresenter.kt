@@ -9,7 +9,6 @@ import rx.Observable
 class RestPresenter : BaseRestPresenter<String>() {
 
     override fun onNext(string: String) {
-        Log.d("rest_presenter", string)
         viewState.startLoading(string)
     }
 

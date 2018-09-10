@@ -87,7 +87,6 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
     }
 
     override fun startLoading(string: String) {
-        Log.d("rest_presenter", fragment_one_text.id.toString())
         fragment_one_text.text = string
 
     }
