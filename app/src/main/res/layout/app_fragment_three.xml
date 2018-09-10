@@ -10,13 +10,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/fragment_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp" />
-
-        <Button
-            android:id="@+id/frame_button"
+            android:id="@+id/fragment_three_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp" />

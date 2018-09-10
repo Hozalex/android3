@@ -3,9 +3,11 @@ package com.ahozyainov.cloudshare.view.activity
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import android.widget.Toast
 import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.presenter.RestPresenter
 import com.ahozyainov.cloudshare.presenter.base.BaseRestView
@@ -15,13 +17,14 @@ import com.ahozyainov.cloudshare.view.fragment.FragmentTwo
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.app_bar.*
+import kotlinx.android.synthetic.main.app_fragment_one.*
 
 class MainActivity : MvpAppCompatActivity(), BaseRestView {
 
     @InjectPresenter
-    val presenter = RestPresenter()
+    lateinit var mRestPresenter: RestPresenter
 
-    private lateinit var mFragmentManager: android.support.v4.app.FragmentManager
+    private val mFragmentManager = supportFragmentManager
     private lateinit var mFragmentOne: FragmentOne
     private lateinit var mFragmentTwo: FragmentTwo
     private lateinit var mFragmentThree: FragmentThree
@@ -41,8 +44,6 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
         mFragmentOne = FragmentOne()
         mFragmentTwo = FragmentTwo()
         mFragmentThree = FragmentThree()
-        mFragmentManager = supportFragmentManager
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -57,7 +58,10 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
                 .setView(editText)
                 .setPositiveButton("OK") { dialogInterface, i ->
                     if (editText.text.isNotEmpty()) {
-                        presenter.update(editText.text.toList())
+                        if (mFragmentOne.isVisible) {
+                            mRestPresenter.update(arrayListOf(editText.text.toString()))
+                        }
+//
                     }
                 }
         alert.show()
@@ -82,16 +86,19 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
 
     }
 
-    override fun startLoading() {
+    override fun startLoading(string: String) {
+        Log.d("rest_presenter", fragment_one_text.id.toString())
+        fragment_one_text.text = string
 
     }
 
     override fun hideLoading() {
-        TODO("not implemented") //ToTODO("not implemented") //To change body of created functions use File | Settings | File Templates. change body of created functions use File | Settings | File Templates.
+        Toast.makeText(this, "Hide Loading", Toast.LENGTH_SHORT).show()
     }
 
     override fun showError(error: String) {
-
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
+
 
 }
