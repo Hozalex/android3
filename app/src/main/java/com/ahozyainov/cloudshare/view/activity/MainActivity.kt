@@ -2,52 +2,54 @@ package com.ahozyainov.cloudshare.view.activity
 
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
-import com.ahozyainov.cloudshare.R
+import com.ahozyainov.cloudshare.R.id.action_feed as actionFeed
+import com.ahozyainov.cloudshare.R.id.action_profile as actionProfile
+import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
+import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
+import com.ahozyainov.cloudshare.R.menu.app_bar_menu as barMenu
+import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
+import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
 import com.ahozyainov.cloudshare.presenter.RestPresenter
 import com.ahozyainov.cloudshare.presenter.base.BaseRestView
-import com.ahozyainov.cloudshare.view.fragment.FragmentOne
-import com.ahozyainov.cloudshare.view.fragment.FragmentThree
-import com.ahozyainov.cloudshare.view.fragment.FragmentTwo
+import com.ahozyainov.cloudshare.view.fragment.feed.FragmentFeed
+import com.ahozyainov.cloudshare.view.fragment.profile.FragmentProfile
+import com.ahozyainov.cloudshare.view.fragment.search.FragmentSearch
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.app_bar.*
-import kotlinx.android.synthetic.main.app_fragment_one.*
 
 class MainActivity : MvpAppCompatActivity(), BaseRestView {
 
     @InjectPresenter
-    lateinit var mRestPresenter: RestPresenter
+    lateinit var restPresenter: RestPresenter
 
-    private val mFragmentManager = supportFragmentManager
-    private lateinit var mFragmentOne: FragmentOne
-    private lateinit var mFragmentTwo: FragmentTwo
-    private lateinit var mFragmentThree: FragmentThree
-    private lateinit var mBottomNavView: BottomNavigationView
+    private lateinit var startFragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(activityMain)
+
         initVariable()
+
         setSupportActionBar(toolbar)
+
         onNavigationItemSelected()
-        mFragmentManager.beginTransaction().add(R.id.frame_container, mFragmentOne).commit()
+
+        supportFragmentManager.beginTransaction().add(frameContainer, startFragment).commit()
     }
 
     private fun initVariable() {
-        mBottomNavView = findViewById(R.id.bottom_navigation)
-        mFragmentOne = FragmentOne()
-        mFragmentTwo = FragmentTwo()
-        mFragmentThree = FragmentThree()
+        startFragment = FragmentFeed()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.app_bar_menu, menu)
+        menuInflater.inflate(barMenu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -58,10 +60,9 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
                 .setView(editText)
                 .setPositiveButton("OK") { dialogInterface, i ->
                     if (editText.text.isNotEmpty()) {
-                        if (mFragmentOne.isVisible) {
-                            mRestPresenter.update(arrayListOf(editText.text.toString()))
-                        }
-//
+//                        if (fragmentFeed.isVisible) {
+//                            mRestPresenter.update(arrayListOf(editText.text.toString()))
+//                        }
                     }
                 }
         alert.show()
@@ -69,25 +70,29 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
     }
 
     private fun onNavigationItemSelected() {
-        mBottomNavView.setOnNavigationItemSelectedListener { item ->
+        val bottomNavigationView: BottomNavigationView = findViewById(bottomNavigation)
+        bottomNavigationView.animate()
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.action_one -> {
-                    mFragmentManager.beginTransaction().replace(R.id.frame_container, mFragmentOne).addToBackStack(null).commit()
+                actionFeed -> {
+                    supportFragmentManager.beginTransaction().replace(frameContainer, FragmentFeed())
+                            .commit()
                 }
-                R.id.action_two -> {
-                    mFragmentManager.beginTransaction().replace(R.id.frame_container, mFragmentTwo).addToBackStack(null).commit()
+                actionProfile -> {
+                    supportFragmentManager.beginTransaction().replace(frameContainer, FragmentProfile())
+                            .commit()
                 }
-                R.id.action_three -> {
-                    mFragmentManager.beginTransaction().replace(R.id.frame_container, mFragmentThree).addToBackStack(null).commit()
+                actionSearch -> {
+                    supportFragmentManager.beginTransaction().replace(frameContainer, FragmentSearch())
+                            .commit()
                 }
             }
-            false
+            true
         }
 
     }
 
     override fun startLoading(string: String) {
-        fragment_one_text.text = string
 
     }
 

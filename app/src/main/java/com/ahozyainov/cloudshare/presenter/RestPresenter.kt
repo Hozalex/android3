@@ -1,19 +1,17 @@
 package com.ahozyainov.cloudshare.presenter
 
-import android.util.Log
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
+import com.ahozyainov.cloudshare.presenter.base.BaseRestView
 import com.arellomobile.mvp.InjectViewState
-import rx.Observable
 
 @InjectViewState
-class RestPresenter : BaseRestPresenter<String>() {
-
-    override fun onNext(string: String) {
-        viewState.startLoading(string)
+class RestPresenter : BaseRestPresenter<Any, BaseRestView>() {
+    override fun onNext(t: Any?) {
     }
+
 
     fun update(list: List<String>) {
 
-        Observable.from(list).subscribe(this)
+
     }
 }

@@ -1,18 +1,20 @@
 package com.ahozyainov.cloudshare.presenter.base
 
-import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import rx.Observer
+import org.reactivestreams.Subscriber
+import org.reactivestreams.Subscription
 
-@InjectViewState
-abstract class BaseRestPresenter<T> : MvpPresenter<BaseRestView>(), Observer<T> {
+
+abstract class BaseRestPresenter<T, V : BaseRestView> : MvpPresenter<V>(), Subscriber<T> {
 
     override fun onError(e: Throwable) {
         viewState.showError(e.localizedMessage)
     }
 
-    override fun onCompleted() {
-        viewState.hideLoading()
+    override fun onSubscribe(s: Subscription?) {
     }
 
+    override fun onComplete() {
+
+    }
 }

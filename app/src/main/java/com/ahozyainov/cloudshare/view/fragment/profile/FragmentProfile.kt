@@ -1,22 +1,21 @@
-package com.ahozyainov.cloudshare.view.fragment
+package com.ahozyainov.cloudshare.view.fragment.profile
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ahozyainov.cloudshare.R
+import com.ahozyainov.cloudshare.R.layout.fragment_profile as fragmentProfileLayout
 import com.arellomobile.mvp.MvpAppCompatFragment
-import kotlinx.android.synthetic.main.app_fragment_two.*
 
-class FragmentTwo : MvpAppCompatFragment() {
+
+class FragmentProfile : MvpAppCompatFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragment_two_text.text = "Fragment Two"
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.app_fragment_two, container, false)
+        return inflater.inflate(fragmentProfileLayout, container, false)
     }
 
 }
