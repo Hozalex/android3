@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -75,21 +76,26 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 actionFeed -> {
-                    supportFragmentManager.beginTransaction().replace(frameContainer, FragmentFeed())
-                            .commit()
+                    placeFragment(FragmentFeed::class.qualifiedName)
                 }
                 actionProfile -> {
-                    supportFragmentManager.beginTransaction().replace(frameContainer, FragmentProfile())
-                            .commit()
+                    placeFragment(FragmentProfile::class.qualifiedName)
                 }
                 actionSearch -> {
-                    supportFragmentManager.beginTransaction().replace(frameContainer, FragmentSearch())
-                            .commit()
+                    placeFragment(FragmentSearch::class.qualifiedName)
                 }
             }
             true
         }
 
+    }
+
+    private fun placeFragment(fragmentTag: String?) {
+        supportFragmentManager.beginTransaction()
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
+                        android.R.anim.fade_out, android.R.anim.fade_in)
+                .replace(frameContainer,Fragment.instantiate(this, fragmentTag, null))
+                .commit()
     }
 
     override fun startLoading(string: String) {
