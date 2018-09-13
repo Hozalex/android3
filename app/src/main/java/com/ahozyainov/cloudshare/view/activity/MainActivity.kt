@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import com.ahozyainov.cloudshare.R.layout.content_main
 import com.ahozyainov.cloudshare.R.id.action_feed as actionFeed
 import com.ahozyainov.cloudshare.R.id.action_profile as actionProfile
 import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
@@ -23,7 +25,7 @@ import kotlinx.android.synthetic.main.app_bar.*
 
 class MainActivity : MvpAppCompatActivity() {
 
-    private lateinit var startFragment: Fragment
+    lateinit var appFragmentManager: FragmentManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,20 +37,17 @@ class MainActivity : MvpAppCompatActivity() {
 
         onNavigationItemSelected()
 
-        supportFragmentManager.beginTransaction().add(frameContainer, startFragment).commit()
-    }
+        var feedFragment = appFragmentManager.findFragmentByTag("feedFragment")
 
-
-    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
-        super.onSaveInstanceState(outState, outPersistentState)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
-        super.onRestoreInstanceState(savedInstanceState)
+        if (feedFragment == null) {
+            feedFragment = FeedFragment()
+            appFragmentManager.beginTransaction().add(frameContainer, feedFragment, "feedFragment").commit()
+        }
     }
 
     private fun initVariable() {
-        startFragment = FeedFragment()
+        appFragmentManager = supportFragmentManager
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
