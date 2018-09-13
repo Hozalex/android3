@@ -18,7 +18,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import com.ahozyainov.cloudshare.R.layout.fragment_feed as fragmentFeedLayout
 
-class FragmentFeed : MvpAppCompatFragment(), FeedView {
+class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     @InjectPresenter
     lateinit var feedPresenter: FeedPresenter

@@ -1,4 +1,9 @@
 package com.ahozyainov.cloudshare.presenter.search
 
-class SearchPresenter {
+import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
+
+class SearchPresenter : BaseRestPresenter<Any, SearchView>() {
+    override fun onNext(t: Any?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 }

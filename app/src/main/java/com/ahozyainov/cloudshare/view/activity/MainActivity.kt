@@ -1,14 +1,13 @@
 package com.ahozyainov.cloudshare.view.activity
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import android.widget.Toast
 import com.ahozyainov.cloudshare.R.id.action_feed as actionFeed
 import com.ahozyainov.cloudshare.R.id.action_profile as actionProfile
 import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
@@ -16,19 +15,13 @@ import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
 import com.ahozyainov.cloudshare.R.menu.app_bar_menu as barMenu
 import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
 import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
-import com.ahozyainov.cloudshare.presenter.RestPresenter
-import com.ahozyainov.cloudshare.presenter.base.BaseRestView
-import com.ahozyainov.cloudshare.view.fragment.feed.FragmentFeed
-import com.ahozyainov.cloudshare.view.fragment.profile.FragmentProfile
-import com.ahozyainov.cloudshare.view.fragment.search.FragmentSearch
+import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
+import com.ahozyainov.cloudshare.view.fragment.profile.ProfileFragment
+import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
 import com.arellomobile.mvp.MvpAppCompatActivity
-import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.app_bar.*
 
-class MainActivity : MvpAppCompatActivity(), BaseRestView {
-
-    @InjectPresenter
-    lateinit var restPresenter: RestPresenter
+class MainActivity : MvpAppCompatActivity() {
 
     private lateinit var startFragment: Fragment
 
@@ -45,8 +38,17 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
         supportFragmentManager.beginTransaction().add(frameContainer, startFragment).commit()
     }
 
+
+    override fun onSaveInstanceState(outState: Bundle?, outPersistentState: PersistableBundle?) {
+        super.onSaveInstanceState(outState, outPersistentState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
     private fun initVariable() {
-        startFragment = FragmentFeed()
+        startFragment = FeedFragment()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -76,13 +78,13 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 actionFeed -> {
-                    placeFragment(FragmentFeed::class.qualifiedName)
+                    placeFragment(FeedFragment::class.qualifiedName)
                 }
                 actionProfile -> {
-                    placeFragment(FragmentProfile::class.qualifiedName)
+                    placeFragment(ProfileFragment::class.qualifiedName)
                 }
                 actionSearch -> {
-                    placeFragment(FragmentSearch::class.qualifiedName)
+                    placeFragment(SearchFragment::class.qualifiedName)
                 }
             }
             true
@@ -94,20 +96,8 @@ class MainActivity : MvpAppCompatActivity(), BaseRestView {
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
                         android.R.anim.fade_out, android.R.anim.fade_in)
-                .replace(frameContainer,Fragment.instantiate(this, fragmentTag, null))
+                .replace(frameContainer, Fragment.instantiate(this, fragmentTag, null))
                 .commit()
-    }
-
-    override fun startLoading(string: String) {
-
-    }
-
-    override fun hideLoading() {
-        Toast.makeText(this, "Hide Loading", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showError(error: String) {
-        Toast.makeText(this, error, Toast.LENGTH_SHORT).show()
     }
 
 

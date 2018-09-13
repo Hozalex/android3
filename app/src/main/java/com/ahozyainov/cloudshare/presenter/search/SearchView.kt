@@ -1,4 +1,6 @@
 package com.ahozyainov.cloudshare.presenter.search
 
-class SearchView {
+import com.ahozyainov.cloudshare.presenter.base.BaseRestView
+
+interface SearchView : BaseRestView {
 }

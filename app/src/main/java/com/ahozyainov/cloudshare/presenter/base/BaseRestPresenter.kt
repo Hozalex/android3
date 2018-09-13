@@ -11,8 +11,8 @@ abstract class BaseRestPresenter<T, V : BaseRestView> : MvpPresenter<V>(), Subsc
         viewState.showError(e.localizedMessage)
     }
 
-    override fun onSubscribe(s: Subscription?) {
-    }
+    override fun onSubscribe(s: Subscription) = s.request(Long.MAX_VALUE)
+
 
     override fun onComplete() {
 

@@ -11,7 +11,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ahozyainov.cloudshare.R.layout.fragment_search as fragmentSearchLayout
 
-class FragmentSearch : MvpAppCompatFragment(), SearchView {
+class SearchFragment : MvpAppCompatFragment(), SearchView {
 
 
     @InjectPresenter

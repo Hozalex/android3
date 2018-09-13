@@ -1,6 +1,5 @@
 package com.ahozyainov.cloudshare.model
 
-class FeedViewModel {
-   lateinit var imageUrl :String
-   lateinit var description :String
+data class FeedViewModel(val imageUrl: String, val description: String, val address: Any) {
+
 }

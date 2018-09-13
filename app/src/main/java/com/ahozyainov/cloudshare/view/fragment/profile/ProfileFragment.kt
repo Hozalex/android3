@@ -12,7 +12,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 
 
-class FragmentProfile : MvpAppCompatFragment(), ProfileView {
+class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     @InjectPresenter
     lateinit var profilePresenter: ProfilePresenter

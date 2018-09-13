@@ -1,4 +1,6 @@
 package com.ahozyainov.cloudshare.presenter.profile
 
-interface ProfileView {
+import com.ahozyainov.cloudshare.presenter.base.BaseRestView
+
+interface ProfileView : BaseRestView {
 }
