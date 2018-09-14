@@ -4,22 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.ahozyainov.cloudshare.presenter.feed.FeedPresenter
 import com.ahozyainov.cloudshare.presenter.profile.ProfilePresenter
 import com.ahozyainov.cloudshare.presenter.profile.ProfileView
-import com.ahozyainov.cloudshare.R.layout.fragment_profile as fragmentProfileLayout
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
-
+import com.ahozyainov.cloudshare.R.layout.fragment_profile as fragmentProfileLayout
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     @InjectPresenter
     lateinit var profilePresenter: ProfilePresenter
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(fragmentProfileLayout, container, false)

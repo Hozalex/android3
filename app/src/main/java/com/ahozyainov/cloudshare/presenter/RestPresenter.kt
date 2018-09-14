@@ -9,9 +9,6 @@ class RestPresenter : BaseRestPresenter<Any, BaseRestView>() {
     override fun onNext(t: Any?) {
     }
 
-
     fun update(list: List<String>) {
-
-
     }
 }

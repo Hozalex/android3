@@ -6,8 +6,5 @@ import com.arellomobile.mvp.InjectViewState
 @InjectViewState
 class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     override fun onNext(t: Any?) {
-
     }
-
-
 }

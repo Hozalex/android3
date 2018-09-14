@@ -9,5 +9,4 @@ interface BaseRestView : MvpView {
     fun startLoading(string: String)
     fun hideLoading()
     fun showError(error: String)
-
 }

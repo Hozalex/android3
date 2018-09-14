@@ -4,16 +4,13 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import com.ahozyainov.cloudshare.R
-import java.util.zip.Inflater
+import com.ahozyainov.cloudshare.R.layout.image_recycler_search as imageRecyclerSearch
 
 class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val imageView = SearchViewHolder(LayoutInflater.from(parent.context)
-                .inflate(R.layout.image_recycler_search, parent, false) as ImageView)
+                .inflate(imageRecyclerSearch, parent, false) as ImageView)
         return imageView
     }
 
@@ -25,8 +22,5 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-
-    class SearchViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView) {
-
-    }
+    class SearchViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 }

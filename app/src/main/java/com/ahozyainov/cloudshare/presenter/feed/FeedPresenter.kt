@@ -1,6 +1,5 @@
 package com.ahozyainov.cloudshare.presenter.feed
 
-import android.util.Log
 import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.model.FeedViewModel
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
@@ -9,8 +8,6 @@ import io.reactivex.Flowable
 
 @InjectViewState
 class FeedPresenter : BaseRestPresenter<Any, FeedView>() {
-
-    lateinit var feedViewModel: FeedViewModel
 
     override fun onNext(t: Any) {
         viewState.setItem(arrayListOf(FeedViewModel("none", "none", t)))
