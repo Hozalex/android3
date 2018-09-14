@@ -3,14 +3,14 @@
 
     <item
         android:id="@+id/action_feed"
-        android:icon="@android:drawable/ic_menu_gallery"
-        android:title="@string/one" />
+        android:icon="@drawable/ic_outline_collections"
+        android:title="@string/explore" />
     <item
         android:id="@+id/action_profile"
-        android:icon="@android:drawable/ic_menu_upload"
-        android:title="@string/two" />
+        android:icon="@drawable/ic_baseline_image_search"
+        android:title="@string/search" />
     <item
         android:id="@+id/action_search"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/three" />
+        android:icon="@drawable/ic_outline_account_box"
+        android:title="@string/profile" />
 </menu>

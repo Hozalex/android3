@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">CloudShare</string>
-    <string name="one">One</string>
-    <string name="two">Two</string>
-    <string name="three">Three</string>
+    <string name="explore">Explore</string>
+    <string name="profile">Profile</string>
     <string name="search">Search</string>
 
     <!-- TODO: Remove or change this placeholder text -->
