@@ -28,6 +28,7 @@ buildscript {
     ext.android_support_ver = "27.1.1"
     ext.moxy_ver = "1.5.5"
     ext.glide_ver = "4.8.0"
+    ext.retrofit_ver = "2.4.0"
 }
 
 dependencies {
@@ -54,5 +55,9 @@ dependencies {
     //Glide
     implementation "com.github.bumptech.glide:glide:$glide_ver"
     kapt "com.github.bumptech.glide:compiler:$glide_ver"
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_ver"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_ver"
 
 }
