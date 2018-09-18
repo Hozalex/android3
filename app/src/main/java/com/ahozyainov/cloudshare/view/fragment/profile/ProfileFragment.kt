@@ -1,5 +1,7 @@
 package com.ahozyainov.cloudshare.view.fragment.profile
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +10,6 @@ import com.ahozyainov.cloudshare.presenter.profile.ProfilePresenter
 import com.ahozyainov.cloudshare.presenter.profile.ProfileView
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.fragment_profile.*
 import com.ahozyainov.cloudshare.R.layout.fragment_profile as fragmentProfileLayout
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
@@ -21,20 +21,20 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         return inflater.inflate(fragmentProfileLayout, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        Glide.with(this)
-                .load("http://farm2.staticflickr.com/1851/buddyicons/77825218@N04.jpg")
-                .into(image_view_profile)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
+        val connectivityManager: ConnectivityManager = context!!
+                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        if (networkInfo != null && networkInfo.isConnected) profilePresenter.update()
+
     }
 
     override fun startLoading(string: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Glide.with(this)
+                .load(string)
+                .into(image_view_profile)
     }
 
     override fun hideLoading() {

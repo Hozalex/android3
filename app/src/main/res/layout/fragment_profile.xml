@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/image_view_profile"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:src="@drawable/ic_general_account"
         app:layout_constraintBottom_toTopOf="@id/text_view_profile"
         app:layout_constraintEnd_toEndOf="parent"
