@@ -37,10 +37,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 //        if (networkInfo != null && networkInfo.isConnected) profilePresenter.update()
     }
 
-    override fun startLoading(string: String) {
+    override fun startLoading(url: String, userName: String) {
         Glide.with(this)
-                .load(string)
+                .load(url)
                 .into(image_view_profile)
+        text_view_profile.text = userName
     }
 
     override fun hideLoading() {

@@ -34,7 +34,7 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
                         val resp: Resp? = response.body()
                         Log.d("retrofit", "pesponse body ${response.body().toString()}")
                         Log.d("retrofit", "photoUrl " + resp!!.getPhotoUrl())
-                        viewState.startLoading(resp!!.getPhotoUrl())
+                        viewState.startLoading(resp!!.getPhotoUrl(), resp.person?.username?.content!!)
                     } else {
                         Log.d("retrofit ", "onResponse err " + response.code().toString() + " " + call.request().url().toString())
                     }

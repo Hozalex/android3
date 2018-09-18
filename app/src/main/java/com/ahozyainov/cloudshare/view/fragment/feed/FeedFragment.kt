@@ -47,7 +47,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         recycler_view_feed.layoutManager = LinearLayoutManager(context)
     }
 
-    override fun startLoading(string: String) {
+    override fun startLoading(string: String, string2: String) {
         Toast.makeText(context, "Loading start", Toast.LENGTH_SHORT).show()
     }
 

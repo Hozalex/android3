@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 data class Resp(
 
-        @field:SerializedName("person")
         val person: Person? = null
 ) {
     fun getPhotoUrl(): String {
