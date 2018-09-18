@@ -26,11 +26,15 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         retainInstance = true
-        val connectivityManager: ConnectivityManager = context!!
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        if (networkInfo != null && networkInfo.isConnected) profilePresenter.update()
 
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        val connectivityManager: ConnectivityManager = context!!
+//                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        val networkInfo = connectivityManager.activeNetworkInfo
+//        if (networkInfo != null && networkInfo.isConnected) profilePresenter.update()
     }
 
     override fun startLoading(string: String) {

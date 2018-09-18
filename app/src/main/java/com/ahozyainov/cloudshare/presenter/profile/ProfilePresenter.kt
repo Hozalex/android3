@@ -1,7 +1,7 @@
 package com.ahozyainov.cloudshare.presenter.profile
 
 import android.util.Log
-import com.ahozyainov.cloudshare.model.ProfileViewModel
+import com.ahozyainov.cloudshare.model.Resp
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import com.ahozyainov.cloudshare.presenter.base.FlickrApiService
 import com.arellomobile.mvp.InjectViewState
@@ -17,27 +17,36 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     override fun onNext(t: Any?) {
     }
 
+    override fun attachView(view: ProfileView?) {
+        super.attachView(view)
+        update()
+    }
+
     fun update() {
         try {
             flickrApiService = FlickrApiService.create()
-            val call: Call<ProfileViewModel> = flickrApiService.getProfile()
-            call.enqueue(object : Callback<ProfileViewModel> {
-                override fun onResponse(call: Call<ProfileViewModel>, response: Response<ProfileViewModel>) {
+            val call: Call<Resp> = flickrApiService.getProfile(1)
+            Log.d("retrofit ", "start call " + call.request().url().toString())
+            call.enqueue(object : Callback<Resp> {
+                override fun onResponse(call: Call<Resp>, response: Response<Resp>) {
                     if (response.isSuccessful) {
-                        val profileViewModel: ProfileViewModel? = response.body()
-                        viewState.startLoading(profileViewModel!!.photoUrl)
+                        Log.d("retrofit ", "onResponse succ " + response.code().toString() + " " + call.request().url().toString())
+                        val resp: Resp? = response.body()
+                        Log.d("retrofit", "pesponse body ${response.body().toString()}")
+                        Log.d("retrofit", "photoUrl " + resp!!.getPhotoUrl())
+                        viewState.startLoading(resp!!.getPhotoUrl())
                     } else {
-                        Log.d("onResponse", response.code().toString())
+                        Log.d("retrofit ", "onResponse err " + response.code().toString() + " " + call.request().url().toString())
                     }
                 }
 
-                override fun onFailure(call: Call<ProfileViewModel>, t: Throwable) {
-                    Log.d("onFailure", t.message)
+                override fun onFailure(call: Call<Resp>, t: Throwable) {
+                    Log.d("retrofit ", "failure " + t.message)
                 }
 
             })
         } catch (e: IOException) {
-            Log.d("retrofit error", e.message)
+            Log.d("retrofit ", "error " + e.message)
             return
         }
 
