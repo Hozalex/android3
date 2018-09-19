@@ -1,10 +1,25 @@
 package com.ahozyainov.cloudshare.model
 
+import android.arch.persistence.room.Entity
+import com.google.gson.annotations.SerializedName
+
 data class ProfileViewModel(
-        private var iconfarm: String? = null,
-        private var iconserver: String? = null,
-        private var nsid: String? = null) {
+        val person: Person? = null) {
 
-    var photoUrl = "http://farm$iconfarm.staticflickr.com/$iconserver/buddyicons/$nsid.jpg"
+    fun getPhotoUrl(): String {
+        return "http://farm${person?.iconfarm}.staticflickr.com/${person?.iconserver}/buddyicons/${person?.nsid}.jpg"
+    }
 
+    data class Person(
+            val iconfarm: Int? = null,
+            val nsid: String? = null,
+            val iconserver: String? = null,
+            val username: Username? = null
+    )
+
+    @Entity
+    data class Username(
+            @SerializedName("_content")
+            val content: String? = null
+    )
 }

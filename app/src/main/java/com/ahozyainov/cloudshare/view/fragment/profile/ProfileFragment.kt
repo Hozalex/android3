@@ -3,11 +3,14 @@ package com.ahozyainov.cloudshare.view.fragment.profile
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Message
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.ahozyainov.cloudshare.presenter.profile.ProfilePresenter
 import com.ahozyainov.cloudshare.presenter.profile.ProfileView
+import com.ahozyainov.cloudshare.view.GlideApp
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.bumptech.glide.Glide
@@ -31,17 +34,25 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        val connectivityManager: ConnectivityManager = context!!
-//                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//        val networkInfo = connectivityManager.activeNetworkInfo
-//        if (networkInfo != null && networkInfo.isConnected) profilePresenter.update()
+        val connectivityManager: ConnectivityManager = context!!
+                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        if (networkInfo != null && networkInfo.isConnected) {
+            profilePresenter.update()
+        } else {
+            Toast.makeText(context, "Connect to Internet is unavailable", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    override fun startLoading(url: String, userName: String) {
-        Glide.with(this)
+    override fun setData(userName: String, url: String) {
+        GlideApp.with(this)
                 .load(url)
                 .into(image_view_profile)
         text_view_profile.text = userName
+    }
+
+    override fun startLoading() {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun hideLoading() {
@@ -49,7 +60,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     }
 
     override fun showError(error: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }
 
 }

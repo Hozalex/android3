@@ -26,6 +26,7 @@ import kotlinx.android.synthetic.main.app_bar.*
 class MainActivity : MvpAppCompatActivity() {
 
     lateinit var appFragmentManager: FragmentManager
+    private val fragmentTag = "active fragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,12 +38,12 @@ class MainActivity : MvpAppCompatActivity() {
 
         onNavigationItemSelected()
 
-        var feedFragment = appFragmentManager.findFragmentByTag("feedFragment")
+        var activeFragment = appFragmentManager.findFragmentByTag(fragmentTag)
 
-        if (feedFragment == null) {
-            feedFragment = FeedFragment()
-            appFragmentManager.beginTransaction().add(frameContainer, feedFragment, "feedFragment").commit()
+        if (activeFragment == null) {
+            activeFragment = FeedFragment()
         }
+        appFragmentManager.beginTransaction().add(frameContainer, activeFragment, fragmentTag).commit()
     }
 
     private fun initVariable() {
@@ -93,8 +94,8 @@ class MainActivity : MvpAppCompatActivity() {
 
     private fun placeFragment(fragmentTag: String?) {
         supportFragmentManager.beginTransaction()
-                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out,
-                        android.R.anim.fade_out, android.R.anim.fade_in)
+                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right,
+                        android.R.anim.slide_out_right, android.R.anim.slide_in_left)
                 .replace(frameContainer, Fragment.instantiate(this, fragmentTag, null))
                 .commit()
     }

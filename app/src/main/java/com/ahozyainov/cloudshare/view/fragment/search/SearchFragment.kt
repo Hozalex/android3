@@ -11,7 +11,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.ahozyainov.cloudshare.R.layout.fragment_search as fragmentSearchLayout
 
 class SearchFragment : MvpAppCompatFragment(), SearchView {
-    override fun startLoading(string1: String, string2: String) {
+    override fun startLoading() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
