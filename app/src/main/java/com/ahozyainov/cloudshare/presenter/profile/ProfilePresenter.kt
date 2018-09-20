@@ -1,11 +1,9 @@
 package com.ahozyainov.cloudshare.presenter.profile
 
-import android.app.Application
 import android.util.Log
 import com.ahozyainov.cloudshare.model.ProfileViewModel
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import com.ahozyainov.cloudshare.presenter.base.FlickrApiService
-import com.ahozyainov.cloudshare.view.GlideApp
 import com.arellomobile.mvp.InjectViewState
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,7 +29,7 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
         getProfileJson()
     }
 
-       private fun getProfileJson() {
+    private fun getProfileJson() {
         try {
             flickrApiService = FlickrApiService.create()
             val call: Call<ProfileViewModel> = flickrApiService
@@ -61,6 +59,8 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     }
 
     fun setDataToFragment(profileViewModel: ProfileViewModel?) {
-        viewState.setData(profileViewModel?.person?.username?.content!!,profileViewModel.getPhotoUrl())
+        viewState.setData(profileViewModel?.person?.username?.content!!,
+                profileViewModel.getPhotoUrl())
     }
+
 }

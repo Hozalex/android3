@@ -1,6 +1,5 @@
 package com.ahozyainov.cloudshare.model
 
-import android.arch.persistence.room.Entity
 import com.google.gson.annotations.SerializedName
 
 data class ProfileViewModel(
@@ -17,7 +16,6 @@ data class ProfileViewModel(
             val username: Username? = null
     )
 
-    @Entity
     data class Username(
             @SerializedName("_content")
             val content: String? = null
