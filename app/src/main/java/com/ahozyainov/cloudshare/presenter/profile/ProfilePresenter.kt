@@ -84,6 +84,8 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
         user = UserData(profileViewModel?.person?.nsid!!,
                 profileViewModel.getPhotoUrl(),
                 profileViewModel.person.username?.content!!)
+
+        db.profileDao().insertUser(user)
     }
 
     fun setDataToFragment(userName: String, url: String) {
