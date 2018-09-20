@@ -1,10 +1,18 @@
 package com.ahozyainov.cloudshare.presenter.profile
 
 import android.util.Log
+import com.ahozyainov.cloudshare.MainApplication
 import com.ahozyainov.cloudshare.model.ProfileViewModel
+import com.ahozyainov.cloudshare.model.UserData
+import com.ahozyainov.cloudshare.model.dao.AppDatabase
+import com.ahozyainov.cloudshare.model.dao.ProfileDao
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import com.ahozyainov.cloudshare.presenter.base.FlickrApiService
 import com.arellomobile.mvp.InjectViewState
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.functions.Consumer
+import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,12 +29,25 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     private val userId = "77825218@N04"
     private val format = "json"
     private val noJsonCallback = 1
+    val db: AppDatabase = MainApplication.instance.getDatabase()
+    lateinit var user: UserData
 
     override fun onNext(t: Any?) {
     }
 
     fun update() {
-        getProfileJson()
+        db.profileDao().getUserByNsid(userId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(object : DisposableSingleObserver<UserData>() {
+                    override fun onSuccess(t: UserData) {
+                        setDataToFragment(t.userName, t.url)
+                    }
+
+                    override fun onError(e: Throwable) {
+                        getProfileJson()
+                    }
+                })
     }
 
     private fun getProfileJson() {
@@ -40,7 +61,8 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
                                         response: Response<ProfileViewModel>) {
                     if (response.isSuccessful) {
                         val profileViewModel: ProfileViewModel? = response.body()
-                        setDataToFragment(profileViewModel)
+                        setDataToUserData(profileViewModel)
+                        setDataToFragment(profileViewModel?.person?.username?.content!!, profileViewModel.getPhotoUrl())
                     } else {
                         viewState.showError(onResponseErr)
                         Log.d(TAG, "$onResponseErr ${response.code()}")
@@ -58,9 +80,14 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
         }
     }
 
-    fun setDataToFragment(profileViewModel: ProfileViewModel?) {
-        viewState.setData(profileViewModel?.person?.username?.content!!,
-                profileViewModel.getPhotoUrl())
+    private fun setDataToUserData(profileViewModel: ProfileViewModel?) {
+        user = UserData(profileViewModel?.person?.nsid!!,
+                profileViewModel.getPhotoUrl(),
+                profileViewModel.person.username?.content!!)
+    }
+
+    fun setDataToFragment(userName: String, url: String) {
+        viewState.setData(userName, url)
     }
 
 }

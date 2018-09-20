@@ -1,7 +1,6 @@
 package com.ahozyainov.cloudshare.view.activity
 
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
@@ -9,19 +8,18 @@ import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import com.ahozyainov.cloudshare.R.layout.content_main
-import com.ahozyainov.cloudshare.R.id.action_feed as actionFeed
-import com.ahozyainov.cloudshare.R.id.action_profile as actionProfile
-import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
-import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
-import com.ahozyainov.cloudshare.R.menu.app_bar_menu as barMenu
-import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
-import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
 import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
 import com.ahozyainov.cloudshare.view.fragment.profile.ProfileFragment
 import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
 import com.arellomobile.mvp.MvpAppCompatActivity
 import kotlinx.android.synthetic.main.app_bar.*
+import com.ahozyainov.cloudshare.R.id.action_feed as actionFeed
+import com.ahozyainov.cloudshare.R.id.action_profile as actionProfile
+import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
+import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
+import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
+import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
+import com.ahozyainov.cloudshare.R.menu.app_bar_menu as barMenu
 
 class MainActivity : MvpAppCompatActivity() {
 
@@ -31,7 +29,6 @@ class MainActivity : MvpAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(activityMain)
-
         initVariable()
 
         setSupportActionBar(toolbar)
