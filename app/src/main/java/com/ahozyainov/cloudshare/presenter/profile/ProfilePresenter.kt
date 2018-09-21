@@ -5,12 +5,11 @@ import com.ahozyainov.cloudshare.MainApplication
 import com.ahozyainov.cloudshare.model.ProfileViewModel
 import com.ahozyainov.cloudshare.model.UserData
 import com.ahozyainov.cloudshare.model.dao.AppDatabase
-import com.ahozyainov.cloudshare.model.dao.ProfileDao
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import com.ahozyainov.cloudshare.presenter.base.FlickrApiService
 import com.arellomobile.mvp.InjectViewState
+import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.functions.Consumer
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
@@ -22,20 +21,24 @@ import java.io.IOException
 class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
 
     private lateinit var flickrApiService: FlickrApiService
-    private val TAG = "retrofit"
+    private val TAG = "profile presenter"
     private val onResponseErr = "onResponse error"
     private val onFailure = "onFailure"
     private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
     private val userId = "77825218@N04"
     private val format = "json"
     private val noJsonCallback = 1
-    val db: AppDatabase = MainApplication.instance.getDatabase()
+    private val db: AppDatabase = MainApplication.instance.getDatabase()
     lateinit var user: UserData
 
     override fun onNext(t: Any?) {
     }
 
     fun update() {
+        checkDataFromDb()
+    }
+
+    private fun checkDataFromDb() {
         db.profileDao().getUserByNsid(userId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -45,6 +48,7 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
                     }
 
                     override fun onError(e: Throwable) {
+                        Log.d(TAG, "check DB error")
                         getProfileJson()
                     }
                 })
@@ -84,8 +88,14 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
         user = UserData(profileViewModel?.person?.nsid!!,
                 profileViewModel.getPhotoUrl(),
                 profileViewModel.person.username?.content!!)
+        insertUserDataToDb(user)
+    }
 
-        db.profileDao().insertUser(user)
+    private fun insertUserDataToDb(user: UserData) {
+        Completable.fromAction { db.profileDao().insertUser(user) }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe()
     }
 
     fun setDataToFragment(userName: String, url: String) {

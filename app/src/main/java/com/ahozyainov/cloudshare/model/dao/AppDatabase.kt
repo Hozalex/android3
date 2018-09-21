@@ -6,5 +6,6 @@ import com.ahozyainov.cloudshare.model.UserData
 
 @Database(entities = [UserData::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
+    
     abstract fun profileDao(): ProfileDao
 }

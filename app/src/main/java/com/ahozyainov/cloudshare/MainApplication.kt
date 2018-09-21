@@ -6,6 +6,8 @@ import com.ahozyainov.cloudshare.model.dao.AppDatabase
 
 class MainApplication : Application() {
 
+    val DBNAME = "userdatabase"
+
     companion object {
         lateinit var instance: MainApplication
     }
@@ -15,7 +17,7 @@ class MainApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        database = Room.databaseBuilder(this, AppDatabase::class.java, "userdatabase")
+        database = Room.databaseBuilder(this, AppDatabase::class.java, DBNAME)
                 .build()
     }
 
