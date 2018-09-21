@@ -30,6 +30,7 @@ buildscript {
     ext.glide_ver = "4.8.0"
     ext.retrofit_ver = "2.4.0"
     ext.room_ver = "1.1.1"
+    ext.dagger2_ver = "2.13"
 }
 
 dependencies {
@@ -66,4 +67,7 @@ dependencies {
     implementation "android.arch.persistence.room:rxjava2:$room_ver"
     kapt "android.arch.persistence.room:compiler:$room_ver"
 
+    //Dagger 2
+    implementation "com.google.dagger:dagger:$dagger2_ver"
+    kapt "com.google.dagger:dagger-compiler:$dagger2_ver"
 }
