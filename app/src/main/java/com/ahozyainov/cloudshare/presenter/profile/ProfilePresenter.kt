@@ -6,7 +6,7 @@ import com.ahozyainov.cloudshare.model.ProfileViewModel
 import com.ahozyainov.cloudshare.model.UserData
 import com.ahozyainov.cloudshare.model.dao.AppDatabase
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
-import com.ahozyainov.cloudshare.presenter.base.FlickrApiService
+import com.ahozyainov.cloudshare.model.net.FlickrApiService
 import com.arellomobile.mvp.InjectViewState
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -59,7 +59,6 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
             flickrApiService = FlickrApiService.create()
             val call: Call<ProfileViewModel> = flickrApiService
                     .getProfile(noJsonCallback, apiKey, userId, format)
-
             call.enqueue(object : Callback<ProfileViewModel> {
                 override fun onResponse(call: Call<ProfileViewModel>,
                                         response: Response<ProfileViewModel>) {

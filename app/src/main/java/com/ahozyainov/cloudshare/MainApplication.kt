@@ -6,7 +6,7 @@ import com.ahozyainov.cloudshare.model.dao.AppDatabase
 
 class MainApplication : Application() {
 
-    val DBNAME = "userdatabase"
+    private val DBNAME = "userdatabase"
 
     companion object {
         lateinit var instance: MainApplication

@@ -1,4 +1,4 @@
-package com.ahozyainov.cloudshare.presenter.base
+package com.ahozyainov.cloudshare.model.net
 
 import com.ahozyainov.cloudshare.model.ProfileViewModel
 import com.google.gson.GsonBuilder
