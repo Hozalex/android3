@@ -16,22 +16,29 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.IOException
+import javax.inject.Inject
 
 @InjectViewState
 class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
 
+    @Inject
+    lateinit var call: Call<ProfileViewModel>
+
     private lateinit var flickrApiService: FlickrApiService
     private val TAG = "profile presenter"
-    private val onResponseErr = "onResponse error"
-    private val onFailure = "onFailure"
-    private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
+    private val onResponseErr = "onResponse ProfilePresenter Error"
+    private val onFailure = "onFailure ProfilePresenter Error"
     private val userId = "77825218@N04"
-    private val format = "json"
-    private val noJsonCallback = 1
     private val db: AppDatabase = MainApplication.instance.getDatabase()
+    private val retrofitComponent = MainApplication.instance.getRetrofitComponent()
     lateinit var user: UserData
 
     override fun onNext(t: Any?) {
+    }
+
+    override fun attachView(view: ProfileView?) {
+        super.attachView(view)
+        retrofitComponent.injectToProfilePresenter(this)
     }
 
     fun update() {
@@ -56,9 +63,6 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
 
     private fun getProfileJson() {
         try {
-            flickrApiService = FlickrApiService.create()
-            val call: Call<ProfileViewModel> = flickrApiService
-                    .getProfile(noJsonCallback, apiKey, userId, format)
             call.enqueue(object : Callback<ProfileViewModel> {
                 override fun onResponse(call: Call<ProfileViewModel>,
                                         response: Response<ProfileViewModel>) {
