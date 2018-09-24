@@ -35,12 +35,6 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
         retainInstance = true
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        textView = feed_text_view
-        view.findViewById<Button>(R.id.feed_button).setOnClickListener { textView.text = "Нииичосииии" }
-    }
-
     override fun setItem(items: List<FeedViewModel>) {
         val feedAdapter = FeedAdapter(items)
         recycler_view_feed.adapter = feedAdapter

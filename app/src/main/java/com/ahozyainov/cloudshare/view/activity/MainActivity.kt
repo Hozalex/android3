@@ -1,10 +1,12 @@
 package com.ahozyainov.cloudshare.view.activity
 
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
@@ -23,28 +25,23 @@ import com.ahozyainov.cloudshare.R.menu.app_bar_menu as barMenu
 
 class MainActivity : MvpAppCompatActivity() {
 
-    lateinit var appFragmentManager: FragmentManager
-    private val fragmentTag = "active fragment"
+    private lateinit var activeFragment: Fragment
+    private var fragmentTag = "active fragment"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(activityMain)
-        initVariable()
 
         setSupportActionBar(toolbar)
 
         onNavigationItemSelected()
 
-        var activeFragment = appFragmentManager.findFragmentByTag(fragmentTag)
-
-        if (activeFragment == null) {
+        if (savedInstanceState == null) {
             activeFragment = FeedFragment()
+            supportFragmentManager.beginTransaction()
+                    .add(frameContainer, activeFragment, fragmentTag)
+                    .commit()
         }
-        appFragmentManager.beginTransaction().add(frameContainer, activeFragment, fragmentTag).commit()
-    }
-
-    private fun initVariable() {
-        appFragmentManager = supportFragmentManager
 
     }
 
@@ -89,11 +86,12 @@ class MainActivity : MvpAppCompatActivity() {
 
     }
 
-    private fun placeFragment(fragmentTag: String?) {
+    private fun placeFragment(fragmentTagString: String?) {
+        activeFragment = Fragment.instantiate(this, fragmentTagString, null)
         supportFragmentManager.beginTransaction()
                 .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right,
                         android.R.anim.slide_out_right, android.R.anim.slide_in_left)
-                .replace(frameContainer, Fragment.instantiate(this, fragmentTag, null))
+                .replace(frameContainer, activeFragment)
                 .commit()
     }
 
