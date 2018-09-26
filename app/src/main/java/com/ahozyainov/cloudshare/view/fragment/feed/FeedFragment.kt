@@ -11,8 +11,10 @@ import android.widget.Toast
 import com.ahozyainov.cloudshare.R.id.recycler_view_feed
 import com.ahozyainov.cloudshare.presenter.feed.FeedPresenter
 import com.ahozyainov.cloudshare.presenter.feed.FeedView
+import com.ahozyainov.cloudshare.view.GlideApp
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
+import kotlinx.android.synthetic.main.fragment_feed.*
 import com.ahozyainov.cloudshare.R.layout.fragment_feed as fragmentFeedLayout
 
 class FeedFragment : MvpAppCompatFragment(), FeedView {

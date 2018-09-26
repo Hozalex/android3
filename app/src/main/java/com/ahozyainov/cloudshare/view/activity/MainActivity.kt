@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
+import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
 import com.ahozyainov.cloudshare.view.fragment.profile.ProfileFragment
 import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
