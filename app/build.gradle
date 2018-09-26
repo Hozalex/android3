@@ -25,7 +25,7 @@ android {
 }
 
 buildscript {
-    ext.android_support_ver = "27.1.1"
+    ext.android_support_ver = "28.0.0"
     ext.moxy_ver = "1.5.5"
     ext.glide_ver = "4.8.0"
     ext.retrofit_ver = "2.4.0"
