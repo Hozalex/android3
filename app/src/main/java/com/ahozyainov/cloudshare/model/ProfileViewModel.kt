@@ -2,8 +2,7 @@ package com.ahozyainov.cloudshare.model
 
 import com.google.gson.annotations.SerializedName
 
-data class ProfileViewModel(
-        val person: Person? = null) {
+data class ProfileViewModel(val person: Person? = null) {
 
     fun getPhotoUrl(): String {
         return "http://farm${person?.iconfarm}.staticflickr.com/${person?.iconserver}/buddyicons/${person?.nsid}.jpg"

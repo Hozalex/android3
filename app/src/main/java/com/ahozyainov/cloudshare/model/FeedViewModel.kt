@@ -1,3 +1,17 @@
 package com.ahozyainov.cloudshare.model
 
-data class FeedViewModel(val imageUrl: String, val description: String, val address: Any)
+data class FeedViewModel(val photos: Photos? = null) {
+
+    data class Photos(val photo: List<PhotoItem?>? = null)
+    data class PhotoItem(val title: String? = null, val urlL: String? = null)
+
+    fun getUrlList(): List<String> {
+        val urlList = mutableListOf<String>()
+        if (photos?.photo!!.isNotEmpty()) {
+            for (photo: PhotoItem? in photos.photo) {
+                urlList.add(photo?.urlL!!)
+            }
+        }
+        return urlList
+    }
+}

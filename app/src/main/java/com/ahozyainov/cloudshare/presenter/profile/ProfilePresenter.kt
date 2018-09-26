@@ -24,7 +24,6 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     @Inject
     lateinit var call: Call<ProfileViewModel>
 
-    private lateinit var flickrApiService: FlickrApiService
     private val TAG = "profile presenter"
     private val onResponseErr = "onResponse ProfilePresenter Error"
     private val onFailure = "onFailure ProfilePresenter Error"
