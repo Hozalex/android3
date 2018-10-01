@@ -29,7 +29,6 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     private val onFailure = "onFailure ProfilePresenter Error"
     private val userId = "77825218@N04"
     private val db: AppDatabase = MainApplication.instance.getDatabase()
-    private val retrofitComponent = MainApplication.instance.getRetrofitComponent()
     lateinit var user: UserData
 
     override fun onNext(t: Any?) {
@@ -37,7 +36,7 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
 
     override fun attachView(view: ProfileView?) {
         super.attachView(view)
-        retrofitComponent.injectToProfilePresenter(this)
+        MainApplication.instance.getRetrofitComponent().injectToProfilePresenter(this)
     }
 
     fun update() {

@@ -15,7 +15,7 @@ class RetrofitModule {
     private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
     private val userId = "77825218@N04"
     private val format = "json"
-    private val extras = "url_l"
+    private val extras = "url_s"
     private val noJsonCallback = 1
 
     @Provides

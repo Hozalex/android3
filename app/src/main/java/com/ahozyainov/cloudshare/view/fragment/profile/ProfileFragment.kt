@@ -12,9 +12,9 @@ import com.ahozyainov.cloudshare.presenter.profile.ProfileView
 import com.ahozyainov.cloudshare.view.GlideApp
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
+import com.ahozyainov.cloudshare.R.layout.fragment_profile as fragmentProfileLayout
 import kotlinx.android.synthetic.main.fragment_profile.image_view_profile as avatarImageView
 import kotlinx.android.synthetic.main.fragment_profile.text_view_profile as userNameTextView
-import com.ahozyainov.cloudshare.R.layout.fragment_profile as fragmentProfileLayout
 
 class ProfileFragment : MvpAppCompatFragment(), ProfileView {
 

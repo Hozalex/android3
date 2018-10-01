@@ -1,6 +1,7 @@
 package com.ahozyainov.cloudshare.presenter.feed
 
 import android.util.Log
+import com.ahozyainov.cloudshare.MainApplication
 import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.model.FeedViewModel
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
@@ -26,6 +27,7 @@ class FeedPresenter : BaseRestPresenter<Any, FeedView>() {
 
     override fun attachView(view: FeedView?) {
         super.attachView(view)
+        MainApplication.instance.getRetrofitComponent().injectToFeedPresenter(this)
         update()
     }
 
