@@ -20,7 +20,6 @@ class ProfilePresenterUnitTest {
 
     private lateinit var mockCall: Call<ProfileViewModel>
 
-
     @Test
     fun profilePresenterWrongUserIdTest() {
         mockCall = getProfileCall(mockRetrofitModule.getRetrofit())

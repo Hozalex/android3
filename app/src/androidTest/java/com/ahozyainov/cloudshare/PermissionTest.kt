@@ -7,6 +7,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class PermissionTest {
+
     @Test
     fun checkInternetPermission() {
         val appContext = InstrumentationRegistry.getTargetContext()
