@@ -10,10 +10,10 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-class RetrofitModule {
+open class RetrofitModule {
 
     private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
-    private val userId = "77825218@N04"
+    var userId = "77825218@N04"
     private val format = "json"
     private val extras = "url_s"
     private val noJsonCallback = 1

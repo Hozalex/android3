@@ -42,6 +42,8 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$android_support_ver"
     implementation "com.android.support:design:$android_support_ver"
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.7.22'
+    androidTestImplementation 'org.mockito:mockito-android:2.7.22'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 

@@ -19,7 +19,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @InjectViewState
-class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
+open class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
 
     @Inject
     lateinit var call: Call<ProfileViewModel>
@@ -29,7 +29,7 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     private val onFailure = "onFailure ProfilePresenter Error"
     private val userId = "77825218@N04"
     private val db: AppDatabase = MainApplication.instance.getDatabase()
-    lateinit var user: UserData
+    private lateinit var user: UserData
 
     override fun onNext(t: Any?) {
     }
@@ -59,7 +59,7 @@ class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
                 })
     }
 
-    private fun getProfileJson() {
+    fun getProfileJson() {
         try {
             call.enqueue(object : Callback<ProfileViewModel> {
                 override fun onResponse(call: Call<ProfileViewModel>,
