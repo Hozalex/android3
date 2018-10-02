@@ -2,6 +2,7 @@ package com.ahozyainov.cloudshare.model.net
 
 import com.ahozyainov.cloudshare.model.FeedViewModel
 import com.ahozyainov.cloudshare.model.ProfileViewModel
+import com.ahozyainov.cloudshare.model.SearchViewModel
 import com.google.gson.GsonBuilder
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -24,4 +25,13 @@ interface FlickrApiService {
                     @Query("extras") extras: String,
                     @Query("format") format: String)
             : Call<FeedViewModel>
+
+    @GET("services/rest/?method=flickr.photos.search")
+    fun getSearchView(@Query("nojsoncallback") nojsoncallback: Int,
+                      @Query("api_key") apiKey: String,
+                      @Query("extras") extras: String,
+                      @Query("format") format: String,
+                      @Query("text") searchText: String,
+                      @Query("content_type") type: Int)
+            : Call<SearchViewModel>
 }

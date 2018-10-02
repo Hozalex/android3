@@ -2,6 +2,7 @@ package com.ahozyainov.cloudshare.model.net
 
 import com.ahozyainov.cloudshare.model.FeedViewModel
 import com.ahozyainov.cloudshare.model.ProfileViewModel
+import com.ahozyainov.cloudshare.model.SearchViewModel
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -17,6 +18,8 @@ open class RetrofitModule {
     private val format = "json"
     private val extras = "url_s"
     private val noJsonCallback = 1
+    private val type = 1
+    private val searchText = ""
 
     @Provides
     fun getRetrofit(): Retrofit {
@@ -39,5 +42,11 @@ open class RetrofitModule {
     fun getFeedCall(retrofit: Retrofit): Call<FeedViewModel> {
         val flickrApiService = retrofit.create(FlickrApiService::class.java)
         return flickrApiService.getFeedView(noJsonCallback, apiKey, extras, format)
+    }
+
+    @Provides
+    fun getSearchCall(retrofit: Retrofit): Call<SearchViewModel> {
+        val flickrApiService = retrofit.create(FlickrApiService::class.java)
+        return flickrApiService.getSearchView(noJsonCallback, apiKey, extras, format, searchText, type)
     }
 }

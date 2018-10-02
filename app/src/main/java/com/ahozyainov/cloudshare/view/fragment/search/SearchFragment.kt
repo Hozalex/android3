@@ -16,20 +16,12 @@ import com.ahozyainov.cloudshare.R.layout.fragment_search as fragmentSearchLayou
 
 class SearchFragment : MvpAppCompatFragment(), SearchView {
 
-    @InjectPresenter
-    lateinit var searchPresenter: SearchPresenter
-
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.app_bar_menu, menu)
         val searchManager = context?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
         (menu?.findItem(R.id.app_bar_search)?.actionView as android.support.v7.widget.SearchView)
                 .apply { setSearchableInfo(searchManager.getSearchableInfo(activity?.componentName)) }
         super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -43,12 +35,6 @@ class SearchFragment : MvpAppCompatFragment(), SearchView {
         retainInstance = true
     }
 
-    private fun handleIntent(intent: Intent) {
-        if (Intent.ACTION_SEARCH == intent.action) {
-            val query = intent.getStringExtra(SearchManager.QUERY)
-            Toast.makeText(context, query, Toast.LENGTH_SHORT).show()
-        }
-    }
 
     override fun showError(error: String) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
