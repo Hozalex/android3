@@ -6,7 +6,5 @@ import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 
 @StateStrategyType(AddToEndSingleStrategy::class)
 interface BaseRestView : MvpView {
-    fun startLoading()
-    fun hideLoading()
     fun showError(error: String)
 }

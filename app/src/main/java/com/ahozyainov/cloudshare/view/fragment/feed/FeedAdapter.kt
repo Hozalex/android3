@@ -15,7 +15,6 @@ class FeedAdapter(private val items: List<String>) : RecyclerView.Adapter<FeedAd
         return FeedViewHolder(LayoutInflater.from(parent.context)
                 .inflate(imageRecyclerFeed, parent, false) as ImageView)
     }
-
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {

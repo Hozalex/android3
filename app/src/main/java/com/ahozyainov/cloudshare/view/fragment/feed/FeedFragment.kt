@@ -21,8 +21,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
 
     @InjectPresenter
     lateinit var feedPresenter: FeedPresenter
-
-    lateinit var textView: TextView
+    lateinit var feedAdapter: FeedAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val feedView = inflater.inflate(fragmentFeedLayout, container, false)
@@ -35,21 +34,11 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
     }
 
     override fun setItem(items: List<String>) {
-        val feedAdapter = FeedAdapter(items)
+        feedAdapter = FeedAdapter(items)
         recycler_view_feed.adapter = feedAdapter
-        recycler_view_feed.layoutManager = LinearLayoutManager(context)
-    }
-
-    override fun startLoading() {
-        Toast.makeText(context, "Loading start", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun hideLoading() {
-        Toast.makeText(context, "Loading end", Toast.LENGTH_SHORT).show()
     }
 
     override fun showError(error: String) {
-        hideLoading()
         Log.d("error", error)
     }
 

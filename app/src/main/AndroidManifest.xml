@@ -19,10 +19,19 @@
             android:name=".view.activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="a97aa488a282e7ad528a1b1dbcb1d7cb8a6b4743" />
+        
     </application>
 
 

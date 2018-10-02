@@ -4,13 +4,9 @@ import android.os.Bundle
 import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
-import android.util.Log
-import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
-import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
 import com.ahozyainov.cloudshare.view.fragment.profile.ProfileFragment
 import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
@@ -22,7 +18,10 @@ import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
 import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
 import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
 import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
-import com.ahozyainov.cloudshare.R.menu.app_bar_menu as barMenu
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
+
+
 
 class MainActivity : MvpAppCompatActivity() {
 
@@ -31,6 +30,7 @@ class MainActivity : MvpAppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Fabric.with(this, Crashlytics())
         setContentView(activityMain)
 
         setSupportActionBar(toolbar)
@@ -44,27 +44,6 @@ class MainActivity : MvpAppCompatActivity() {
                     .commit()
         }
 
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(barMenu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        val alert = AlertDialog.Builder(this)
-        val editText = EditText(this)
-        alert.setTitle("Search")
-                .setView(editText)
-                .setPositiveButton("OK") { dialogInterface, i ->
-                    if (editText.text.isNotEmpty()) {
-//                        if (fragmentFeed.isVisible) {
-//                            mRestPresenter.update(arrayListOf(editText.text.toString()))
-//                        }
-                    }
-                }
-        alert.show()
-        return super.onOptionsItemSelected(item)
     }
 
     private fun onNavigationItemSelected() {

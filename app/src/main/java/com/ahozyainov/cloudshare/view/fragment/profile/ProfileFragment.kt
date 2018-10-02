@@ -48,14 +48,6 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         userNameTextView.text = userName
     }
 
-    override fun startLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun hideLoading() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun showError(error: String) {
         Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
     }

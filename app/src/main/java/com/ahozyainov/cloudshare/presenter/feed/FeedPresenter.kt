@@ -25,8 +25,8 @@ class FeedPresenter : BaseRestPresenter<Any, FeedView>() {
     override fun onNext(t: Any) {
     }
 
-    override fun attachView(view: FeedView?) {
-        super.attachView(view)
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
         MainApplication.instance.getRetrofitComponent().injectToFeedPresenter(this)
         update()
     }
