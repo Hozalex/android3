@@ -10,9 +10,7 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintTop_toTopOf="parent"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager">
-
-    </android.support.v7.widget.RecyclerView>
+        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 
 </android.support.constraint.ConstraintLayout>
 

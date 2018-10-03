@@ -18,25 +18,31 @@ class SearchPresenter : BaseRestPresenter<Any, SearchView>() {
     lateinit var call: Call<SearchViewModel>
 
     private val TAG = "search presenter"
-
-    override fun onNext(t: Any?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    private val responseError = "response error"
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
         MainApplication.instance.getRetrofitComponent().injectToSearchPresenter(this)
+        update()
     }
 
-    fun update(searchString: String) {
+    private fun update() {
         try {
-            call.enqueue(object : Callback<SearchViewModel>{
+            call.enqueue(object : Callback<SearchViewModel> {
                 override fun onFailure(call: Call<SearchViewModel>, t: Throwable) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    viewState.showError(t.message!!)
                 }
 
-                override fun onResponse(call: Call<SearchViewModel>, response: Response<SearchViewModel>) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                override fun onResponse(call: Call<SearchViewModel>,
+                                        response: Response<SearchViewModel>) {
+                    if (response.isSuccessful) {
+                        val searchViewModel: SearchViewModel? = response.body()
+                        Log.d(TAG, "${response.body()}")
+                        setDataToSearchFragment(searchViewModel)
+                    } else {
+                        Log.d(TAG, "$responseError ${response.code()}")
+                    }
+
                 }
             })
 
@@ -45,4 +51,13 @@ class SearchPresenter : BaseRestPresenter<Any, SearchView>() {
         }
 
     }
+
+    private fun setDataToSearchFragment(searchViewModel: SearchViewModel?) {
+        viewState.setItem(searchViewModel!!.getUrlList())
+    }
+
+    override fun onNext(t: Any?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
 }

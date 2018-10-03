@@ -8,13 +8,15 @@ import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.view.GlideApp
 import com.ahozyainov.cloudshare.R.layout.image_recycler_feed as imageRecyclerFeed
 
-class FeedAdapter(private val items: List<String>) : RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
+class FeedAdapter(private val items: List<String>) :
+        RecyclerView.Adapter<FeedAdapter.FeedViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedViewHolder {
 
         return FeedViewHolder(LayoutInflater.from(parent.context)
                 .inflate(imageRecyclerFeed, parent, false) as ImageView)
     }
+
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: FeedViewHolder, position: Int) {

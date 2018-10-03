@@ -4,9 +4,12 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.ahozyainov.cloudshare.R
+import com.ahozyainov.cloudshare.view.GlideApp
 import com.ahozyainov.cloudshare.R.layout.image_recycler_search as imageRecyclerSearch
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
+class SearchAdapter(private val items: List<String>)
+    : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         val imageView = SearchViewHolder(LayoutInflater.from(parent.context)
@@ -14,12 +17,13 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
         return imageView
     }
 
-    override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        GlideApp.with(holder.imageView.context)
+                .load(items[position])
+                .placeholder(R.mipmap.example)
+                .into(holder.imageView)
     }
 
     class SearchViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)

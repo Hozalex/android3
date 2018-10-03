@@ -7,6 +7,7 @@ import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v7.app.AlertDialog
+import android.util.Log
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.Toast
@@ -28,9 +29,6 @@ import io.fabric.sdk.android.Fabric
 
 
 class MainActivity : MvpAppCompatActivity() {
-
-    @InjectPresenter
-    lateinit var searchPresenter: SearchPresenter
 
     private lateinit var activeFragment: Fragment
     private var fragmentTag = "active fragment"
@@ -57,7 +55,6 @@ class MainActivity : MvpAppCompatActivity() {
     private fun handleIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
-            searchPresenter.update(query)
         }
     }
 

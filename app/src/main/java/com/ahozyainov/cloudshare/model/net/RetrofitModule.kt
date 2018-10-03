@@ -19,7 +19,7 @@ open class RetrofitModule {
     private val extras = "url_s"
     private val noJsonCallback = 1
     private val type = 1
-    private val searchText = ""
+    private val searchText = "none"
 
     @Provides
     fun getRetrofit(): Retrofit {

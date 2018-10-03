@@ -23,7 +23,9 @@ class FeedFragment : MvpAppCompatFragment(), FeedView {
     lateinit var feedPresenter: FeedPresenter
     lateinit var feedAdapter: FeedAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
         val feedView = inflater.inflate(fragmentFeedLayout, container, false)
         return feedView
     }
