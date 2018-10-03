@@ -3,5 +3,5 @@
     android:id="@+id/image_search"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/search_image_margin"/>
+    android:layout_margin="@dimen/image_margin"/>
 

@@ -16,10 +16,10 @@ open class RetrofitModule {
     private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
     var userId = "77825218@N04"
     private val format = "json"
-    private val extras = "url_s"
+    private val extras = "url_m"
     private val noJsonCallback = 1
     private val type = 1
-    private val searchText = "none"
+    private var searchText: String = "car"
 
     @Provides
     fun getRetrofit(): Retrofit {
@@ -30,6 +30,10 @@ open class RetrofitModule {
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl("https://api.flickr.com/")
                 .build()
+    }
+
+    fun setSearchText(text: String) {
+        searchText = text
     }
 
     @Provides

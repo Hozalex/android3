@@ -8,13 +8,17 @@ import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.view.GlideApp
 import com.ahozyainov.cloudshare.R.layout.image_recycler_search as imageRecyclerSearch
 
-class SearchAdapter(private val items: List<String>)
+class SearchAdapter(private val items: List<String>,
+                    private var onSearchImageClickListener: OnSearchImageClickListener)
     : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
-        val imageView = SearchViewHolder(LayoutInflater.from(parent.context)
+        val searchViewHolder = SearchViewHolder(LayoutInflater.from(parent.context)
                 .inflate(imageRecyclerSearch, parent, false) as ImageView)
-        return imageView
+        searchViewHolder.imageView.setOnClickListener {
+            onSearchImageClickListener.onSearchImageClick(searchViewHolder.adapterPosition)
+        }
+        return searchViewHolder
     }
 
     override fun getItemCount() = items.size
@@ -23,8 +27,13 @@ class SearchAdapter(private val items: List<String>)
         GlideApp.with(holder.imageView.context)
                 .load(items[position])
                 .placeholder(R.mipmap.example)
+                .centerCrop()
                 .into(holder.imageView)
     }
 
     class SearchViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
+
+    interface OnSearchImageClickListener {
+        fun onSearchImageClick(imagePosition: Int)
+    }
 }
