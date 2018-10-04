@@ -5,33 +5,38 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.view.MenuItemCompat
+import android.support.v7.view.menu.MenuItemImpl
 import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import android.view.*
+import android.widget.EditText
 import android.widget.Toast
 import com.ahozyainov.cloudshare.R
+import com.ahozyainov.cloudshare.R.id.app_bar_search
 import com.ahozyainov.cloudshare.presenter.search.SearchPresenter
 import com.ahozyainov.cloudshare.presenter.search.SearchView
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_search.*
+import android.support.v7.widget.SearchView as WidgetSearchView
 import com.ahozyainov.cloudshare.R.layout.fragment_search as fragmentSearchLayout
 
-class SearchFragment : MvpAppCompatFragment(), SearchView, SearchAdapter.OnSearchImageClickListener {
+class SearchFragment : MvpAppCompatFragment(), SearchView,
+        SearchAdapter.OnSearchImageClickListener, WidgetSearchView.OnQueryTextListener {
 
     @InjectPresenter
     lateinit var searchPesenter: SearchPresenter
 
-    lateinit var searchAdapter: SearchAdapter
-    lateinit var urlList: List<String>
+    private lateinit var searchAdapter: SearchAdapter
+    private lateinit var urlList: List<String>
+    private lateinit var searchView: WidgetSearchView
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.app_bar_menu, menu)
-        val searchManager = context?.getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu?.findItem(R.id.app_bar_search)?.actionView as android.support.v7.widget.SearchView)
-                .apply {
-                    setSearchableInfo(searchManager
-                            .getSearchableInfo(activity?.componentName))
-                }
+        val searchItem = menu?.findItem(app_bar_search)
+        searchView = searchItem?.actionView as WidgetSearchView
+        searchView.setOnQueryTextListener(this)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -64,5 +69,14 @@ class SearchFragment : MvpAppCompatFragment(), SearchView, SearchAdapter.OnSearc
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(urlList[imagePosition])
         startActivity(intent)
+    }
+
+    override fun onQueryTextSubmit(p0: String?): Boolean {
+        Log.d("searchView", searchView.query.toString())
+        return false
+    }
+
+    override fun onQueryTextChange(p0: String?): Boolean {
+        return false
     }
 }
