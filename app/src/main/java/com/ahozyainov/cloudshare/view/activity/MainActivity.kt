@@ -17,7 +17,6 @@ import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
 import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
 import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
 
-
 class MainActivity : MvpAppCompatActivity() {
 
     private lateinit var activeFragment: Fragment
@@ -45,15 +44,9 @@ class MainActivity : MvpAppCompatActivity() {
         bottomNavigationView.animate()
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                actionFeed -> {
-                    placeFragment(FeedFragment::class.qualifiedName)
-                }
-                actionProfile -> {
-                    placeFragment(ProfileFragment::class.qualifiedName)
-                }
-                actionSearch -> {
-                    placeFragment(SearchFragment::class.qualifiedName)
-                }
+                actionFeed -> placeFragment(FeedFragment::class.qualifiedName)
+                actionProfile -> placeFragment(ProfileFragment::class.qualifiedName)
+                actionSearch -> placeFragment(SearchFragment::class.qualifiedName)
             }
             true
         }
