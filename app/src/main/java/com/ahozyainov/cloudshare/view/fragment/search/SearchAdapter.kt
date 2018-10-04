@@ -24,11 +24,13 @@ class SearchAdapter(private val items: List<String>,
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        GlideApp.with(holder.imageView.context)
-                .load(items[position])
-                .placeholder(R.mipmap.example)
-                .centerCrop()
-                .into(holder.imageView)
+        if (items[position].isNotEmpty()) {
+            GlideApp.with(holder.imageView.context)
+                    .load(items[position])
+                    .placeholder(R.mipmap.example)
+                    .centerCrop()
+                    .into(holder.imageView)
+        }
     }
 
     class SearchViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)

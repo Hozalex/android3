@@ -6,8 +6,7 @@ import com.ahozyainov.cloudshare.model.dao.AppDatabase
 import com.ahozyainov.cloudshare.model.net.DaggerRetrofitComponent
 import com.ahozyainov.cloudshare.model.net.RetrofitComponent
 
-
-open class MainApplication : Application() {
+class MainApplication : Application() {
 
     private val DBNAME = "userdatabase"
 

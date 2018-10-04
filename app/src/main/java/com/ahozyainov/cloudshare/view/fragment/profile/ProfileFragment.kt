@@ -21,7 +21,11 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
     @InjectPresenter
     lateinit var profilePresenter: ProfilePresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    private var connectionError = "Connect to Internet is unavailable"
+
+    override fun onCreateView(inflater: LayoutInflater,
+                              container: ViewGroup?,
+                              savedInstanceState: Bundle?): View {
         return inflater.inflate(fragmentProfileLayout, container, false)
     }
 
@@ -39,7 +43,7 @@ class ProfileFragment : MvpAppCompatFragment(), ProfileView {
         if (networkInfo != null && networkInfo.isConnected) {
             profilePresenter.update()
         } else {
-            Toast.makeText(context, "Connect to Internet is unavailable", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, connectionError, Toast.LENGTH_SHORT).show()
         }
     }
 

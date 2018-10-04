@@ -2,7 +2,7 @@
     <string name="app_name">Flickr Cloud</string>
     <string name="explore">Explore</string>
     <string name="profile">Profile</string>
-    <string name="search">Search Photo</string>
+    <string name="search" translatable="false">Search Photo</string>
 
     <string name="user_name">user name</string>
 </resources>

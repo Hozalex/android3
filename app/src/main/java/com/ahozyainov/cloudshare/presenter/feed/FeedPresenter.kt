@@ -2,11 +2,9 @@ package com.ahozyainov.cloudshare.presenter.feed
 
 import android.util.Log
 import com.ahozyainov.cloudshare.MainApplication
-import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.model.FeedViewModel
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import com.arellomobile.mvp.InjectViewState
-import io.reactivex.Flowable
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,19 +20,12 @@ class FeedPresenter : BaseRestPresenter<Any, FeedView>() {
     val TAG = "feedPresenter"
     val responseError = "feed response error"
 
-    override fun onNext(t: Any) {
-    }
-
-    override fun onFirstViewAttach() {
-        super.onFirstViewAttach()
+    fun update() {
         MainApplication.instance.getRetrofitComponent().injectToFeedPresenter(this)
-        update()
-    }
-
-    private fun update() {
         try {
             call.enqueue(object : Callback<FeedViewModel> {
-                override fun onResponse(call: Call<FeedViewModel>, response: Response<FeedViewModel>) {
+                override fun onResponse(call: Call<FeedViewModel>,
+                                        response: Response<FeedViewModel>) {
                     if (response.isSuccessful) {
                         val feedViewModel: FeedViewModel? = response.body()
                         setDataToFeedFragment(feedViewModel)

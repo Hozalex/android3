@@ -3,10 +3,7 @@ package com.ahozyainov.cloudshare.model.net
 import com.ahozyainov.cloudshare.model.FeedViewModel
 import com.ahozyainov.cloudshare.model.ProfileViewModel
 import com.ahozyainov.cloudshare.model.SearchViewModel
-import com.google.gson.GsonBuilder
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 

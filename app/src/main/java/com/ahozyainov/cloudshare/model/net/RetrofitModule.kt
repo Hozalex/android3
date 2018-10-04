@@ -11,15 +11,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
-open class RetrofitModule {
+class RetrofitModule {
 
     private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
     var userId = "77825218@N04"
     private val format = "json"
     private val extras = "url_m"
     private val noJsonCallback = 1
-    private val type = 1
-    private var searchText: String = "car"
 
     @Provides
     fun getRetrofit(): Retrofit {
@@ -32,10 +30,6 @@ open class RetrofitModule {
                 .build()
     }
 
-    fun setSearchText(text: String) {
-        searchText = text
-    }
-
     @Provides
     fun getProfileCall(retrofit: Retrofit): Call<ProfileViewModel> {
         val flickrApiService = retrofit.create(FlickrApiService::class.java)
@@ -46,11 +40,5 @@ open class RetrofitModule {
     fun getFeedCall(retrofit: Retrofit): Call<FeedViewModel> {
         val flickrApiService = retrofit.create(FlickrApiService::class.java)
         return flickrApiService.getFeedView(noJsonCallback, apiKey, extras, format)
-    }
-
-    @Provides
-    fun getSearchCall(retrofit: Retrofit): Call<SearchViewModel> {
-        val flickrApiService = retrofit.create(FlickrApiService::class.java)
-        return flickrApiService.getSearchView(noJsonCallback, apiKey, extras, format, searchText, type)
     }
 }

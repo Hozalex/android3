@@ -6,7 +6,6 @@ import com.ahozyainov.cloudshare.model.ProfileViewModel
 import com.ahozyainov.cloudshare.model.UserData
 import com.ahozyainov.cloudshare.model.dao.AppDatabase
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
-import com.ahozyainov.cloudshare.model.net.FlickrApiService
 import com.arellomobile.mvp.InjectViewState
 import io.reactivex.Completable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -31,9 +30,6 @@ open class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
     private val db: AppDatabase = MainApplication.instance.getDatabase()
     private lateinit var user: UserData
 
-    override fun onNext(t: Any?) {
-    }
-
     override fun attachView(view: ProfileView?) {
         super.attachView(view)
         MainApplication.instance.getRetrofitComponent().injectToProfilePresenter(this)
@@ -53,7 +49,7 @@ open class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
                     }
 
                     override fun onError(e: Throwable) {
-                        Log.d(TAG, "check DB error")
+                        Log.d(TAG, e.message)
                         getProfileJson()
                     }
                 })
@@ -67,7 +63,8 @@ open class ProfilePresenter : BaseRestPresenter<Any, ProfileView>() {
                     if (response.isSuccessful) {
                         val profileViewModel: ProfileViewModel? = response.body()
                         setDataToUserData(profileViewModel)
-                        setDataToFragment(profileViewModel?.person?.username?.content!!, profileViewModel.getPhotoUrl())
+                        setDataToFragment(profileViewModel?.person?.username?.content!!,
+                                profileViewModel.getPhotoUrl())
                     } else {
                         viewState.showError(onResponseErr)
                         Log.d(TAG, "$onResponseErr ${response.code()}")

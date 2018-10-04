@@ -5,7 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class FeedViewModel(val photos: Photos? = null) {
 
     data class Photos(val photo: List<PhotoItem?>? = null)
-    data class PhotoItem(val title: String? = null, @SerializedName("url_m") val url: String? = null)
+    data class PhotoItem(val title: String? = null,
+                         @SerializedName("url_m") val url: String? = null)
 
     fun getUrlList(): List<String> {
         val urlList = mutableListOf<String>()

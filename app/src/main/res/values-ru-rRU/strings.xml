@@ -1,2 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <string name="app_name">Flickr Cloud</string>
+    <string name="profile">Профиль</string>
+    <string name="search">Поиск</string>
+    <string name="explore">Фото</string>
+    <string name="user_name">user name</string>
+</resources>

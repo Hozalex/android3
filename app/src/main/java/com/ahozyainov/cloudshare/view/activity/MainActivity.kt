@@ -1,22 +1,14 @@
 package com.ahozyainov.cloudshare.view.activity
 
-import android.app.SearchManager
-import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import android.support.v7.app.AlertDialog
-import android.util.Log
-import android.view.MenuItem
-import android.widget.EditText
-import android.widget.Toast
-import com.ahozyainov.cloudshare.presenter.search.SearchPresenter
 import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
 import com.ahozyainov.cloudshare.view.fragment.profile.ProfileFragment
 import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
 import com.arellomobile.mvp.MvpAppCompatActivity
-import com.arellomobile.mvp.presenter.InjectPresenter
+import com.crashlytics.android.Crashlytics
+import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.app_bar.*
 import com.ahozyainov.cloudshare.R.id.action_feed as actionFeed
 import com.ahozyainov.cloudshare.R.id.action_profile as actionProfile
@@ -24,8 +16,6 @@ import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
 import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
 import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
 import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
-import com.crashlytics.android.Crashlytics
-import io.fabric.sdk.android.Fabric
 
 
 class MainActivity : MvpAppCompatActivity() {
@@ -38,7 +28,6 @@ class MainActivity : MvpAppCompatActivity() {
         Fabric.with(this, Crashlytics())
         setContentView(activityMain)
 
-        handleIntent(intent)
         setSupportActionBar(toolbar)
 
         onNavigationItemSelected()
@@ -48,13 +37,6 @@ class MainActivity : MvpAppCompatActivity() {
             supportFragmentManager.beginTransaction()
                     .add(frameContainer, activeFragment, fragmentTag)
                     .commit()
-        }
-
-    }
-
-    private fun handleIntent(intent: Intent) {
-        if (Intent.ACTION_SEARCH == intent.action) {
-            val query = intent.getStringExtra(SearchManager.QUERY)
         }
     }
 
@@ -75,7 +57,6 @@ class MainActivity : MvpAppCompatActivity() {
             }
             true
         }
-
     }
 
     private fun placeFragment(fragmentTagString: String?) {
@@ -86,6 +67,4 @@ class MainActivity : MvpAppCompatActivity() {
                 .replace(frameContainer, activeFragment)
                 .commit()
     }
-
-
 }
