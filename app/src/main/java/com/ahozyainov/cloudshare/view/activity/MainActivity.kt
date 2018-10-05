@@ -16,15 +16,20 @@ import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
 import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
 import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
 import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
+import com.google.firebase.analytics.FirebaseAnalytics
+
+
 
 class MainActivity : MvpAppCompatActivity() {
 
     private lateinit var activeFragment: Fragment
     private var fragmentTag = "active fragment"
+    private var firebaseAnalytics: FirebaseAnalytics? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Fabric.with(this, Crashlytics())
+        firebaseAnalytics = FirebaseAnalytics.getInstance(this)
         setContentView(activityMain)
 
         setSupportActionBar(toolbar)
