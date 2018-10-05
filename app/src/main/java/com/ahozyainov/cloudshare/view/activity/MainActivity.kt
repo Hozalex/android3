@@ -18,8 +18,6 @@ import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
 import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
 import com.google.firebase.analytics.FirebaseAnalytics
 
-
-
 class MainActivity : MvpAppCompatActivity() {
 
     private lateinit var activeFragment: Fragment
