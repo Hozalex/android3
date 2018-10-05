@@ -39,20 +39,18 @@ class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageCl
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val connectivityManager: ConnectivityManager = context!!
-                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val networkInfo = connectivityManager.activeNetworkInfo
-        if (networkInfo != null && networkInfo.isConnected) {
-            feedPresenter.update()
+        if (recyclerViewState != null) {
+            layoutManager.onRestoreInstanceState(recyclerViewState)
         } else {
-            Toast.makeText(context, connectionError, Toast.LENGTH_SHORT).show()
+            feedUpdate()
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (recyclerViewState != null) {
-            layoutManager.onRestoreInstanceState(recyclerViewState)
+    private fun feedUpdate() {
+        if (checkInternet()) {
+            feedPresenter.update()
+        } else {
+            Toast.makeText(context, connectionError, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -90,6 +88,17 @@ class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageCl
         val intent = Intent(Intent.ACTION_VIEW)
         intent.data = Uri.parse(urlList[imagePosition])
         startActivity(intent)
+    }
+
+    private fun checkInternet(): Boolean {
+        var isConnected = false
+        val connectivityManager: ConnectivityManager = context!!
+                .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val networkInfo = connectivityManager.activeNetworkInfo
+        if (networkInfo != null && networkInfo.isConnected) {
+            isConnected = true
+        }
+        return isConnected
     }
 
 }

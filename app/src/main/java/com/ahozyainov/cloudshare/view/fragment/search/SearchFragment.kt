@@ -6,7 +6,6 @@ import android.content.res.Configuration
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
-import android.os.Parcelable
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.*
@@ -30,10 +29,7 @@ class SearchFragment : MvpAppCompatFragment(), SearchView,
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var urlList: List<String>
     private lateinit var searchView: WidgetSearchView
-    private var recyclerViewState: Parcelable? = null
-    private lateinit var layoutManager: RecyclerView.LayoutManager
     private var connectionError = "Connect to Internet is unavailable"
-    private var LAYOUT_STATE = "layout state"
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.app_bar_menu, menu)
@@ -52,27 +48,6 @@ class SearchFragment : MvpAppCompatFragment(), SearchView,
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
         retainInstance = true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (recyclerViewState != null) {
-            layoutManager.onRestoreInstanceState(recyclerViewState)
-        }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        layoutManager = recycler_view_search.layoutManager!!
-        recyclerViewState = layoutManager.onSaveInstanceState()!!
-        outState.putParcelable(LAYOUT_STATE, recyclerViewState)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null) {
-            recyclerViewState = savedInstanceState.getParcelable(LAYOUT_STATE)!!
-        }
     }
 
     override fun setItem(items: List<String>) {
