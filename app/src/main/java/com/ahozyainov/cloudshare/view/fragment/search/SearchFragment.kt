@@ -30,12 +30,14 @@ class SearchFragment : MvpAppCompatFragment(), SearchView,
     private lateinit var urlList: List<String>
     private lateinit var searchView: WidgetSearchView
     private var connectionError = "Connect to Internet is unavailable"
+    private val startQuery = "nature"
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.app_bar_menu, menu)
         val searchItem = menu?.findItem(appBarSearchView)
         searchView = searchItem?.actionView as WidgetSearchView
         searchView.setOnQueryTextListener(this)
+        searchView.setQuery(startQuery, true)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
