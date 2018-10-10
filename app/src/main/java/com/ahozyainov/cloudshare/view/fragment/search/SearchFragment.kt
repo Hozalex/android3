@@ -4,15 +4,16 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.*
+import android.widget.ImageView
 import android.widget.Toast
+import com.ahozyainov.cloudshare.MainApplication
 import com.ahozyainov.cloudshare.R
+import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
 import com.ahozyainov.cloudshare.presenter.search.SearchPresenter
-import com.ahozyainov.cloudshare.presenter.search.SearchView
+import com.ahozyainov.cloudshare.view.activity.FullImageActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -20,7 +21,7 @@ import android.support.v7.widget.SearchView as WidgetSearchView
 import com.ahozyainov.cloudshare.R.id.app_bar_search as appBarSearchView
 import com.ahozyainov.cloudshare.R.layout.fragment_search as fragmentSearchLayout
 
-class SearchFragment : MvpAppCompatFragment(), SearchView,
+class SearchFragment : MvpAppCompatFragment(), BasePresenterView,
         SearchAdapter.OnSearchImageClickListener, WidgetSearchView.OnQueryTextListener {
 
     @InjectPresenter
@@ -28,9 +29,11 @@ class SearchFragment : MvpAppCompatFragment(), SearchView,
 
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var urlList: List<String>
+    private lateinit var descriptionList: List<String>
     private lateinit var searchView: WidgetSearchView
     private var connectionError = "Connect to Internet is unavailable"
     private val startQuery = "nature"
+    private val DESCRIPTION = "description"
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.app_bar_menu, menu)
@@ -52,10 +55,11 @@ class SearchFragment : MvpAppCompatFragment(), SearchView,
         retainInstance = true
     }
 
-    override fun setItem(items: List<String>) {
-        if (items.isNotEmpty()) {
-            urlList = items
-            searchAdapter = SearchAdapter(items, this)
+    override fun showData(urlItems: List<String>, descriptionItems: List<String>) {
+        if (urlItems.isNotEmpty()) {
+            urlList = urlItems
+            descriptionList = descriptionItems
+            searchAdapter = SearchAdapter(urlItems, this)
             recycler_view_search.adapter = searchAdapter
             if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
                 recycler_view_search.layoutManager = GridLayoutManager(context, 3)
@@ -67,9 +71,10 @@ class SearchFragment : MvpAppCompatFragment(), SearchView,
         Toast.makeText(context, error, Toast.LENGTH_LONG).show()
     }
 
-    override fun onSearchImageClick(imagePosition: Int) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(urlList[imagePosition])
+    override fun onSearchImageClick(imageView: ImageView, imagePosition: Int) {
+        MainApplication.instance.setFullImage(imageView.drawable.mutate())
+        val intent = Intent(context, FullImageActivity::class.java)
+        intent.putExtra(DESCRIPTION, descriptionList[imagePosition])
         startActivity(intent)
     }
 

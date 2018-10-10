@@ -17,7 +17,7 @@ class FeedAdapter(private val items: List<String>,
         val feedViewHolder = FeedViewHolder(LayoutInflater.from(parent.context)
                 .inflate(imageRecyclerFeed, parent, false) as ImageView)
         feedViewHolder.imageView.setOnClickListener {
-            onFeedImageClickListener.onFeedImageClick(feedViewHolder.imageView)
+            onFeedImageClickListener.onFeedImageClick(feedViewHolder.imageView, feedViewHolder.adapterPosition)
         }
         return feedViewHolder
     }
@@ -36,6 +36,6 @@ class FeedAdapter(private val items: List<String>,
     class FeedViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
     interface OnFeedImageClickListener {
-        fun onFeedImageClick(image: ImageView)
+        fun onFeedImageClick(image: ImageView, position: Int)
     }
 }

@@ -4,6 +4,7 @@ import android.util.Log
 import com.ahozyainov.cloudshare.MainApplication
 import com.ahozyainov.cloudshare.model.SearchViewModel
 import com.ahozyainov.cloudshare.model.net.FlickrApiService
+import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import com.arellomobile.mvp.InjectViewState
 import retrofit2.Call
@@ -14,7 +15,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @InjectViewState
-class SearchPresenter : BaseRestPresenter<Any, SearchView>() {
+class SearchPresenter : BaseRestPresenter<Any, BasePresenterView>() {
 
     @Inject
     lateinit var retrofit: Retrofit
@@ -58,7 +59,7 @@ class SearchPresenter : BaseRestPresenter<Any, SearchView>() {
     }
 
     private fun setDataToSearchFragment(searchViewModel: SearchViewModel?) {
-        viewState.setItem(searchViewModel!!.getUrlList())
+        viewState.showData(searchViewModel!!.getUrlList(), searchViewModel.getDescriptionList())
     }
 
 }

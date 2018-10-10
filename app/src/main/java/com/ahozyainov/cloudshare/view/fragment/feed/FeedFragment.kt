@@ -13,25 +13,27 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.ahozyainov.cloudshare.MainApplication
+import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
 import com.ahozyainov.cloudshare.presenter.feed.FeedPresenter
-import com.ahozyainov.cloudshare.presenter.feed.FeedView
 import com.ahozyainov.cloudshare.view.activity.FullImageActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
 import com.ahozyainov.cloudshare.R.layout.fragment_feed as fragmentFeedLayout
 
-class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageClickListener {
+class FeedFragment : MvpAppCompatFragment(), BasePresenterView, FeedAdapter.OnFeedImageClickListener {
 
     @InjectPresenter
     lateinit var feedPresenter: FeedPresenter
 
     private lateinit var feedAdapter: FeedAdapter
     private lateinit var urlList: List<String>
+    private lateinit var descriptionList: List<String>
     private var recyclerViewState: Parcelable? = null
     private lateinit var layoutManager: RecyclerView.LayoutManager
     private val connectionError = "Connect to Internet is unavailable"
     private val LAYOUT_STATE = "layout State"
+    private val DESCRIPTION = "description"
 
     override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
@@ -46,7 +48,6 @@ class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageCl
         } else {
             feedUpdate()
         }
-
     }
 
     private fun feedUpdate() {
@@ -77,9 +78,10 @@ class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageCl
         }
     }
 
-    override fun setItem(items: List<String>) {
-        urlList = items
-        feedAdapter = FeedAdapter(items, this)
+    override fun showData(urlItems: List<String>, descriptionItems: List<String>) {
+        urlList = urlItems
+        descriptionList = descriptionItems
+        feedAdapter = FeedAdapter(urlItems, this)
         recycler_view_feed.adapter = feedAdapter
     }
 
@@ -88,9 +90,10 @@ class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageCl
     }
 
 
-    override fun onFeedImageClick(image: ImageView) {
-        MainApplication.instance.setFullImage(image.drawable)
+    override fun onFeedImageClick(image: ImageView, position: Int) {
+        MainApplication.instance.setFullImage(image.drawable.current)
         val intent = Intent(activity, FullImageActivity::class.java)
+        intent.putExtra(DESCRIPTION, descriptionList[position])
         startActivity(intent)
     }
 

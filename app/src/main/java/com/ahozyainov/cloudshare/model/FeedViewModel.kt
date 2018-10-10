@@ -17,4 +17,14 @@ data class FeedViewModel(val photos: Photos? = null) {
         }
         return urlList
     }
+
+    fun getDescriptionList(): List<String> {
+        val descriptionList = mutableListOf<String>()
+        if (photos?.photo!!.isNotEmpty()) {
+            for (photo: PhotoItem? in photos.photo) {
+                descriptionList.add(photo?.title!!)
+            }
+        }
+        return descriptionList
+    }
 }

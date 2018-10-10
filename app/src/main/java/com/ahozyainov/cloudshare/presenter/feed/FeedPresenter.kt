@@ -3,6 +3,7 @@ package com.ahozyainov.cloudshare.presenter.feed
 import android.util.Log
 import com.ahozyainov.cloudshare.MainApplication
 import com.ahozyainov.cloudshare.model.FeedViewModel
+import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
 import com.ahozyainov.cloudshare.presenter.base.BaseRestPresenter
 import com.arellomobile.mvp.InjectViewState
 import retrofit2.Call
@@ -12,7 +13,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @InjectViewState
-class FeedPresenter : BaseRestPresenter<Any, FeedView>() {
+class FeedPresenter : BaseRestPresenter<Any, BasePresenterView>() {
 
     @Inject
     lateinit var call: Call<FeedViewModel>
@@ -44,6 +45,6 @@ class FeedPresenter : BaseRestPresenter<Any, FeedView>() {
     }
 
     private fun setDataToFeedFragment(feedViewModel: FeedViewModel?) {
-        viewState.setItem(feedViewModel!!.getUrlList())
+        viewState.showData(feedViewModel!!.getUrlList(), feedViewModel.getDescriptionList())
     }
 }

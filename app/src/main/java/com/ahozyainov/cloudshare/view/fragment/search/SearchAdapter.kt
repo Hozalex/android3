@@ -16,7 +16,7 @@ class SearchAdapter(private val items: List<String>,
         val searchViewHolder = SearchViewHolder(LayoutInflater.from(parent.context)
                 .inflate(imageRecyclerSearch, parent, false) as ImageView)
         searchViewHolder.imageView.setOnClickListener {
-            onSearchImageClickListener.onSearchImageClick(searchViewHolder.adapterPosition)
+            onSearchImageClickListener.onSearchImageClick(searchViewHolder.imageView, searchViewHolder.adapterPosition)
         }
         return searchViewHolder
     }
@@ -28,7 +28,6 @@ class SearchAdapter(private val items: List<String>,
             GlideApp.with(holder.imageView.context)
                     .load(items[position])
                     .placeholder(R.mipmap.example)
-                    .centerCrop()
                     .into(holder.imageView)
         }
     }
@@ -36,6 +35,6 @@ class SearchAdapter(private val items: List<String>,
     class SearchViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
     interface OnSearchImageClickListener {
-        fun onSearchImageClick(imagePosition: Int)
+        fun onSearchImageClick(imageView: ImageView, imagePosition: Int)
     }
 }
