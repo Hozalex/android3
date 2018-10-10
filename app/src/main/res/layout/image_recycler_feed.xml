@@ -2,5 +2,6 @@
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/image_feed"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/image_margin" />
+    android:layout_height="200dp"
+    android:layout_margin="@dimen/image_margin"
+    android:scaleType="matrix" />

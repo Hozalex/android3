@@ -3,7 +3,6 @@ package com.ahozyainov.cloudshare.view.fragment.feed
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.widget.RecyclerView
@@ -11,9 +10,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import com.ahozyainov.cloudshare.MainApplication
 import com.ahozyainov.cloudshare.presenter.feed.FeedPresenter
 import com.ahozyainov.cloudshare.presenter.feed.FeedView
+import com.ahozyainov.cloudshare.view.activity.FullImageActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
 import kotlinx.android.synthetic.main.fragment_feed.*
@@ -44,6 +46,7 @@ class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageCl
         } else {
             feedUpdate()
         }
+
     }
 
     private fun feedUpdate() {
@@ -84,9 +87,10 @@ class FeedFragment : MvpAppCompatFragment(), FeedView, FeedAdapter.OnFeedImageCl
         Log.d("error", error)
     }
 
-    override fun onFeedImageClick(imagePosition: Int) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(urlList[imagePosition])
+
+    override fun onFeedImageClick(image: ImageView) {
+        MainApplication.instance.setFullImage(image.drawable)
+        val intent = Intent(activity, FullImageActivity::class.java)
         startActivity(intent)
     }
 

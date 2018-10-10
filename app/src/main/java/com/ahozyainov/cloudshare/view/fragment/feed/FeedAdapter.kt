@@ -17,7 +17,7 @@ class FeedAdapter(private val items: List<String>,
         val feedViewHolder = FeedViewHolder(LayoutInflater.from(parent.context)
                 .inflate(imageRecyclerFeed, parent, false) as ImageView)
         feedViewHolder.imageView.setOnClickListener {
-            onFeedImageClickListener.onFeedImageClick(feedViewHolder.adapterPosition)
+            onFeedImageClickListener.onFeedImageClick(feedViewHolder.imageView)
         }
         return feedViewHolder
     }
@@ -29,7 +29,6 @@ class FeedAdapter(private val items: List<String>,
             GlideApp.with(holder.imageView.context)
                     .load(items[position])
                     .placeholder(R.mipmap.example)
-                    .centerCrop()
                     .into(holder.imageView)
         }
     }
@@ -37,6 +36,6 @@ class FeedAdapter(private val items: List<String>,
     class FeedViewHolder(val imageView: ImageView) : RecyclerView.ViewHolder(imageView)
 
     interface OnFeedImageClickListener {
-        fun onFeedImageClick(imagePosition: Int)
+        fun onFeedImageClick(image: ImageView)
     }
 }
