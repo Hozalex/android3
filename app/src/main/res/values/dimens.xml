@@ -3,5 +3,6 @@
     <dimen name="height_bottom_nav">56dp</dimen>
     <dimen name="image_margin">3dp</dimen>
     <dimen name="standardMargin">16dp</dimen>
-    <dimen name="text_description_size">18sp</dimen>
+    <dimen name="text_description_font_size">18sp</dimen>
+    <dimen name="full_image_height">200dp</dimen>
 </resources>

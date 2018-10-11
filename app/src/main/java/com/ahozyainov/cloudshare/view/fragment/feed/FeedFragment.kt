@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import com.ahozyainov.cloudshare.MainApplication
+import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
 import com.ahozyainov.cloudshare.presenter.feed.FeedPresenter
 import com.ahozyainov.cloudshare.view.activity.FullImageActivity
