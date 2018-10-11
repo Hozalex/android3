@@ -1,8 +1,7 @@
 package com.ahozyainov.cloudshare.model.net
 
+import com.ahozyainov.cloudshare.StringResourses
 import com.ahozyainov.cloudshare.model.FeedViewModel
-import com.ahozyainov.cloudshare.model.ProfileViewModel
-import com.ahozyainov.cloudshare.model.SearchViewModel
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -12,12 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Module
 class RetrofitModule {
-
-    private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
-    var userId = "77825218@N04"
-    private val format = "json"
-    private val extras = "url_m"
-    private val noJsonCallback = 1
 
     @Provides
     fun getRetrofit(): Retrofit {
@@ -31,14 +24,11 @@ class RetrofitModule {
     }
 
     @Provides
-    fun getProfileCall(retrofit: Retrofit): Call<ProfileViewModel> {
-        val flickrApiService = retrofit.create(FlickrApiService::class.java)
-        return flickrApiService.getProfile(noJsonCallback, apiKey, userId, format)
-    }
-
-    @Provides
     fun getFeedCall(retrofit: Retrofit): Call<FeedViewModel> {
         val flickrApiService = retrofit.create(FlickrApiService::class.java)
-        return flickrApiService.getFeedView(noJsonCallback, apiKey, extras, format)
+        return flickrApiService.getFeedView(StringResourses.NO_JSON_CALLBACK,
+                StringResourses.API_KEY,
+                StringResourses.EXTRAS,
+                StringResourses.REQ_FORMAT)
     }
 }

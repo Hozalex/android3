@@ -4,19 +4,17 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
-import com.ahozyainov.cloudshare.view.fragment.profile.ProfileFragment
 import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.crashlytics.android.Crashlytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.app_bar.*
 import com.ahozyainov.cloudshare.R.id.action_feed as actionFeed
-import com.ahozyainov.cloudshare.R.id.action_profile as actionProfile
 import com.ahozyainov.cloudshare.R.id.action_search as actionSearch
 import com.ahozyainov.cloudshare.R.id.bottom_navigation as bottomNavigation
 import com.ahozyainov.cloudshare.R.id.frame_container as frameContainer
 import com.ahozyainov.cloudshare.R.layout.activity_main as activityMain
-import com.google.firebase.analytics.FirebaseAnalytics
 
 class MainActivity : MvpAppCompatActivity() {
 
@@ -48,7 +46,6 @@ class MainActivity : MvpAppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 actionFeed -> placeFragment(FeedFragment::class.qualifiedName)
-                actionProfile -> placeFragment(ProfileFragment::class.qualifiedName)
                 actionSearch -> placeFragment(SearchFragment::class.qualifiedName)
             }
             true

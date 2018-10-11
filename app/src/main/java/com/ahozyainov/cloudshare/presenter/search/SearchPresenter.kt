@@ -2,6 +2,7 @@ package com.ahozyainov.cloudshare.presenter.search
 
 import android.util.Log
 import com.ahozyainov.cloudshare.MainApplication
+import com.ahozyainov.cloudshare.StringResourses
 import com.ahozyainov.cloudshare.model.SearchViewModel
 import com.ahozyainov.cloudshare.model.net.FlickrApiService
 import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
@@ -22,11 +23,6 @@ class SearchPresenter : BaseRestPresenter<Any, BasePresenterView>() {
 
     private val TAG = "search presenter"
     private val responseError = "response error"
-    private val apiKey = "ccaf0957a411c28a2391d7cdc448d902"
-    private val format = "json"
-    private val extras = "url_m"
-    private val noJsonCallback = 1
-    private val type = 1
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
@@ -36,7 +32,12 @@ class SearchPresenter : BaseRestPresenter<Any, BasePresenterView>() {
     fun update(searchText: String?) {
         try {
             val searchService = retrofit.create(FlickrApiService::class.java)
-            searchService.getSearchView(noJsonCallback, apiKey, extras, format, searchText!!, type)
+            searchService.getSearchView(StringResourses.NO_JSON_CALLBACK,
+                    StringResourses.API_KEY,
+                    StringResourses.EXTRAS,
+                    StringResourses.REQ_FORMAT,
+                    searchText!!,
+                    StringResourses.REQ_TYPE)
                     .enqueue(object : Callback<SearchViewModel> {
                         override fun onFailure(call: Call<SearchViewModel>, t: Throwable) {
                             viewState.showError(t.message!!)
