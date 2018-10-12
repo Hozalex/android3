@@ -1,8 +1,12 @@
 package com.ahozyainov.cloudshare.view.activity
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
+import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
 import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -21,6 +25,7 @@ class MainActivity : MvpAppCompatActivity() {
     private lateinit var activeFragment: Fragment
     private var fragmentTag = "active fragment"
     private var firebaseAnalytics: FirebaseAnalytics? = null
+    private val REQUEST_CODE = 99
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +51,10 @@ class MainActivity : MvpAppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 actionFeed -> placeFragment(FeedFragment::class.qualifiedName)
-                actionSearch -> placeFragment(SearchFragment::class.qualifiedName)
+                actionSearch -> {
+                    checkPermission()
+                    placeFragment(SearchFragment::class.qualifiedName)
+                }
             }
             true
         }
@@ -60,4 +68,18 @@ class MainActivity : MvpAppCompatActivity() {
                 .replace(frameContainer, activeFragment)
                 .commit()
     }
+
+    private fun checkPermission() {
+        try {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                        REQUEST_CODE)
+            }
+        } catch (e: Exception) {
+            e.stackTrace
+        }
+    }
+
 }

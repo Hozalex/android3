@@ -1,11 +1,22 @@
 package com.ahozyainov.cloudshare.view.fragment.search
 
+import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.content.res.Configuration
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.support.v4.app.ActivityCompat
+import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
@@ -14,8 +25,10 @@ import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
 import com.ahozyainov.cloudshare.presenter.search.SearchPresenter
 import com.ahozyainov.cloudshare.view.activity.FullImageActivity
+import com.ahozyainov.cloudshare.view.activity.MainActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
+import io.reactivex.rxkotlin.toObservable
 import kotlinx.android.synthetic.main.fragment_search.*
 import android.support.v7.widget.SearchView as WidgetSearchView
 import com.ahozyainov.cloudshare.R.id.app_bar_search as appBarSearchView
@@ -27,21 +40,50 @@ class SearchFragment : MvpAppCompatFragment(), BasePresenterView,
     @InjectPresenter
     lateinit var searchPesenter: SearchPresenter
 
+    private lateinit var geocoder: Geocoder
     private lateinit var searchAdapter: SearchAdapter
     private lateinit var urlList: List<String>
     private lateinit var descriptionList: List<String>
     private lateinit var searchView: WidgetSearchView
     private var connectionError = "Connect to Internet is unavailable"
-    private val startQuery = "nature"
     private val DESCRIPTION = "description"
+    private val DEFAULT_SEARCH_REQUEST = "nature"
+
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.app_bar_menu, menu)
         val searchItem = menu?.findItem(appBarSearchView)
         searchView = searchItem?.actionView as WidgetSearchView
         searchView.setOnQueryTextListener(this)
-        searchView.setQuery(startQuery, true)
+        checkPermission()
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun checkPermission() {
+        try {
+            if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION)
+                    != PackageManager.PERMISSION_GRANTED) {
+                showQuery(DEFAULT_SEARCH_REQUEST)
+            } else {
+                getLocation()
+            }
+        } catch (e: Exception) {
+            e.stackTrace
+        }
+    }
+
+    private fun getLocation() {
+        val addresses: List<Address>
+        geocoder = Geocoder(context)
+        val location = LocationManager.NETWORK_PROVIDER
+        val lm = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val lastKnownLocation: Location = lm.getLastKnownLocation(location)
+        addresses = geocoder.getFromLocation(lastKnownLocation.latitude, lastKnownLocation.longitude, 1)
+        showQuery(addresses[0].locality)
+    }
+
+    private fun showQuery(query: String) {
+        searchView.setQuery(query, true)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
