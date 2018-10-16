@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.view.fragment.feed.FeedFragment
 import com.ahozyainov.cloudshare.view.fragment.search.SearchFragment
 import com.arellomobile.mvp.MvpAppCompatActivity
@@ -63,8 +64,7 @@ class MainActivity : MvpAppCompatActivity() {
     private fun placeFragment(fragmentTagString: String?) {
         activeFragment = Fragment.instantiate(this, fragmentTagString, null)
         supportFragmentManager.beginTransaction()
-                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right,
-                        android.R.anim.slide_out_right, android.R.anim.slide_in_left)
+                .setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
                 .replace(frameContainer, activeFragment)
                 .commit()
     }

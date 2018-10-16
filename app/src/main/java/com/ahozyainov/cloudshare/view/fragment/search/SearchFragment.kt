@@ -1,7 +1,6 @@
 package com.ahozyainov.cloudshare.view.fragment.search
 
 import android.Manifest
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,8 +11,6 @@ import android.location.Location
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
-import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
@@ -25,11 +22,10 @@ import com.ahozyainov.cloudshare.R
 import com.ahozyainov.cloudshare.presenter.base.BasePresenterView
 import com.ahozyainov.cloudshare.presenter.search.SearchPresenter
 import com.ahozyainov.cloudshare.view.activity.FullImageActivity
-import com.ahozyainov.cloudshare.view.activity.MainActivity
 import com.arellomobile.mvp.MvpAppCompatFragment
 import com.arellomobile.mvp.presenter.InjectPresenter
-import io.reactivex.rxkotlin.toObservable
 import kotlinx.android.synthetic.main.fragment_search.*
+import java.util.*
 import android.support.v7.widget.SearchView as WidgetSearchView
 import com.ahozyainov.cloudshare.R.id.app_bar_search as appBarSearchView
 import com.ahozyainov.cloudshare.R.layout.fragment_search as fragmentSearchLayout
@@ -45,10 +41,9 @@ class SearchFragment : MvpAppCompatFragment(), BasePresenterView,
     private lateinit var urlList: List<String>
     private lateinit var descriptionList: List<String>
     private lateinit var searchView: WidgetSearchView
-    private var connectionError = "Connect to Internet is unavailable"
+    private var CONNECTION_ERROR = "Internet connection is unavailable"
     private val DESCRIPTION = "description"
     private val DEFAULT_SEARCH_REQUEST = "nature"
-
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.app_bar_menu, menu)
@@ -65,6 +60,7 @@ class SearchFragment : MvpAppCompatFragment(), BasePresenterView,
                     != PackageManager.PERMISSION_GRANTED) {
                 showQuery(DEFAULT_SEARCH_REQUEST)
             } else {
+
                 getLocation()
             }
         } catch (e: Exception) {
@@ -74,12 +70,15 @@ class SearchFragment : MvpAppCompatFragment(), BasePresenterView,
 
     private fun getLocation() {
         val addresses: List<Address>
-        geocoder = Geocoder(context)
+        geocoder = Geocoder(context, Locale.ENGLISH)
         val location = LocationManager.NETWORK_PROVIDER
-        val lm = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        val lastKnownLocation: Location = lm.getLastKnownLocation(location)
+        val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val lastKnownLocation: Location = locationManager.getLastKnownLocation(location)
         addresses = geocoder.getFromLocation(lastKnownLocation.latitude, lastKnownLocation.longitude, 1)
-        showQuery(addresses[0].locality)
+        when {
+            addresses[0].locality != null -> showQuery(addresses[0].locality)
+            addresses[0].adminArea != null -> showQuery(addresses[0].adminArea)
+        }
     }
 
     private fun showQuery(query: String) {
@@ -124,12 +123,15 @@ class SearchFragment : MvpAppCompatFragment(), BasePresenterView,
         if (checkInternet()) {
             searchPesenter.update(text)
         } else {
-            Toast.makeText(context, connectionError, Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, CONNECTION_ERROR, Toast.LENGTH_SHORT).show()
         }
         return false
     }
 
-    override fun onQueryTextChange(p0: String?): Boolean {
+    override fun onQueryTextChange(text: String?): Boolean {
+        if (text!!.length >= 3) {
+            searchPesenter.update(text)
+        }
         return false
     }
 
